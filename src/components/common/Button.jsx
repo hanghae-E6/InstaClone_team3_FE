@@ -2,7 +2,15 @@ import { Colors } from "../../styles";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-const Button = ({ children, btnTheme, width, height, fontSize, onClick }) => {
+const Button = ({
+  children,
+  btnTheme,
+  width,
+  height,
+  fontSize,
+  onClick,
+  ...props
+}) => {
   return (
     <StyledButton
       btnTheme={btnTheme}
@@ -10,6 +18,7 @@ const Button = ({ children, btnTheme, width, height, fontSize, onClick }) => {
       height={height}
       fontSize={fontSize}
       onClick={onClick}
+      {...props}
     >
       {children}
     </StyledButton>
