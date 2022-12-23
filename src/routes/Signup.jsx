@@ -106,12 +106,14 @@ const Form = styled.form`
 
 const Login = styled.p`
   color: rgb(38, 38, 38);
+  font-family: none;
   font-size: 14px;
   margin: 15px;
 `;
 
 const LoginLink = styled.a`
   color: rgb(0, 149, 246);
+  font-family: none;
   text-decoration: none;
 `;
 
