@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Button from "../components/common/Button";
 import Input from "../components/common/Input";
 import Modal from "../components/common/Modal";
-import Section from "../components/layout/Section";
 
 const Demo = () => {
   const [flag, setFlag] = useState(false);
@@ -16,7 +15,7 @@ const Demo = () => {
   };
 
   return (
-    <Section>
+    <>
       <div>
         <Button btnTheme="primary" width="100px" height="30px">
           primary
@@ -50,7 +49,7 @@ const Demo = () => {
         }
         onClose={closePopup}
       />
-    </Section>
+    </>
   );
 };
 
