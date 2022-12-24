@@ -26,7 +26,12 @@ const Signup = () => {
                   style={{ margin: "0 40px 10px" }}
                   placeholder="비밀번호"
                 />
-                <Button margin="20px 40px 10px" padding="7px 16px!important">
+                <Button
+                  margin="20px 40px 10px"
+                  padding="6px 16px"
+                  fontSize="initial"
+                  borderRadius="7px"
+                >
                   가입
                 </Button>
               </Form>
@@ -68,9 +73,9 @@ const WrapContentBox = styled.div`
 const Logo = styled.span`
   @import url("https://fonts.googleapis.com/css2?family=Oleo+Script&display=swap");
   font-family: "Oleo Script", cursive;
-  font-size: 47px;
+  font-size: 35px;
   margin-top: calc(4px * 9);
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 `;
 
 const ContentBox = styled.div`
