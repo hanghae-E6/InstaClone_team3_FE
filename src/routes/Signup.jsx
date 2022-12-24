@@ -5,7 +5,7 @@ import Button from "../components/common/Button";
 
 const Signup = () => {
   return (
-    <Main>
+    <WrapAll>
       <Wrap>
         <WrapContentBox>
           <ContentBox>
@@ -39,11 +39,11 @@ const Signup = () => {
           </ContentBox>
         </WrapContentBox>
       </Wrap>
-    </Main>
+    </WrapAll>
   );
 };
 
-const Main = styled.main`
+const WrapAll = styled.div`
   background-color: rgb(250, 250, 250);
   align-items: stretch;
   display: flex;
