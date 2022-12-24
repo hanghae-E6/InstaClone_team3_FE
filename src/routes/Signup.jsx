@@ -9,7 +9,7 @@ const Signup = () => {
       <Wrap>
         <WrapContentBox>
           <ContentBox>
-            <Logo aria-label="in⭐gram">In⭐gram</Logo>
+            <Logo>Instar⭐gram</Logo>
             <FormBox>
               <Form>
                 <Intro>친구들의 사진과 동영상을 보려면 가입하세요.</Intro>
@@ -65,7 +65,7 @@ const WrapContentBox = styled.div`
   max-width: 350px;
 `;
 
-const Logo = styled.i`
+const Logo = styled.span`
   @import url("https://fonts.googleapis.com/css2?family=Oleo+Script&display=swap");
   font-family: "Oleo Script", cursive;
   font-size: 47px;
