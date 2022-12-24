@@ -59,6 +59,9 @@ const WrapAll = styled.div`
 
 const Wrap = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
 `;
 
 const WrapContentBox = styled.div`
@@ -86,8 +89,6 @@ const ContentBox = styled.div`
   flex-direction: column;
   align-items: center;
   margin-bottom: 10px;
-  margin-left: -400px;
-  margin-right: 400px;
   padding: 10px 0;
 `;
 

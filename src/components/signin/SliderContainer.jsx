@@ -42,7 +42,8 @@ const SliderContainer = () => {
           height: "583px",
           backgroundPosition: "-46px 0",
           flexBasis: "380.32px",
-          marginLeft: "380px",
+          marginLeft: 0,
+          marginRight: 0,
           backgroundImage:
             "url(https://static.cdninstagram.com/rsrc.php/v3/y4/r/ItTndlZM2n2.png)",
         }}
