@@ -1,0 +1,53 @@
+.email-box {
+  position: relative;
+}
+
+.nickname-box {
+  position: relative;
+}
+
+.password-box {
+  position: relative;
+}
+
+.signup-input {
+  width: 250px;
+}
+
+.signup-input:not(:placeholder-shown) {
+  padding-top: 10px;
+  padding-bottom: 0px;
+}
+
+.signup-input::placeholder {
+  color: transparent;
+}
+
+.signup-input:placeholder-shown + label {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  color: rgb(142, 142, 142);
+  font-size: 13px;
+  margin-left: 49px;
+  margin-top: 12px;
+}
+
+.signup-input:not(:placeholder-shown) + label,
+label {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  color: rgb(142, 142, 142);
+  font-size: 10px;
+  margin-left: 49px;
+  margin-top: 5px;
+  pointer-events: none;
+  position: absolute;
+  left: 0px;
+  transition: all 0.1s ease;
+}
+
+.message {
+  position: absolute;
+  margin-left: -71px;
+  margin-top: 7px;
+}
