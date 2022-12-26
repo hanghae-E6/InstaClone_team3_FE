@@ -58,8 +58,6 @@ const HeaderWrapper = styled.div`
   padding: 45px 20px 12px 20px;
   color: rgb(38, 38, 38);
   h1 {
-    @import url("https://fonts.googleapis.com/css2?family=Oleo+Script&display=swap");
-    font-family: "Oleo Script", cursive;
     font-size: 25px;
     margin-bottom: 60px;
   }
