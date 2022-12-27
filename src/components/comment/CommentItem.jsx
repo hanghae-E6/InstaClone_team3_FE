@@ -27,7 +27,6 @@ const CommentItem = () => {
             so sweet gini bojoku reekk😍😍 masak romantis ,jd tambah asyik
             masak’ane enak poll 👍 besok ya jam 8,30 di mnc tv , monggo sayang.
             oh iya utk wilayah surabaya channel MNC TV 41 UHF ya ✨💋💋💋
-            @officialmnctv @dapurngeborofficial @tyas_tyaz @firhanmci6
           </Comment>
           <LikeButton onClick={onToggleLikeButton}>
             {!like ? <MdFavoriteBorder /> : <MdFavorite />}
@@ -49,15 +48,15 @@ const CommentWrapper = styled.li`
 `;
 
 const Profile = styled.div`
-  width: 42px;
-  height: 42px;
-  line-height: 42px;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
   border-radius: 50px;
   cursor: pointer;
   margin-right: 15px;
   img {
-    width: 42px;
-    height: 42px;
+    width: 30px;
+    height: 30px;
     border-radius: 50px;
   }
 `;

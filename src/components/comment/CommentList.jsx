@@ -8,6 +8,8 @@ const CommentList = () => {
       <CommentListBox>
         <CommentItem />
         <CommentItem />
+        <CommentItem />
+        <CommentItem />
       </CommentListBox>
     </CommentListWrapper>
   );
@@ -19,10 +21,15 @@ const CommentListWrapper = styled.div`
   flex-grow: 1;
   flex-shrink: 1;
   margin-bottom: 4px;
-  min-height: 0;
   overflow: auto;
   position: relative;
   overflow-x: hidden;
+  height: 100%;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
 `;
 
 const CommentListBox = styled.ul`
@@ -36,9 +43,13 @@ const CommentListBox = styled.ul`
   left: 0;
   margin: 0;
   overflow-y: scroll;
-  padding: 16px;
+  padding: 16px 16px 120px 16px;
   position: absolute;
-  scrollbar-width: none;
   vertical-align: baseline;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
 `;
 export default CommentList;
