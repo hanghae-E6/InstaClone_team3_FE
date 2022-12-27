@@ -75,7 +75,7 @@ const Wrapper = styled.div`
   background-color: white;
   display: flex;
   width: 800px;
-  height: 450px;
+  height: 850px;
   border-radius: 10px;
 `;
 
@@ -87,29 +87,30 @@ const StImage = styled.div`
 const StDetail = styled.div`
   width: 55%;
   height: 100%;
-  border-bottom: 1px solid #bcbcbc;
 `;
 
 const StProfile = styled.div`
   width: 100%;
-  height: 10%;
+  height: 8%;
 `;
 
 const StContent = styled.div`
   width: 100%;
-  height: 60%;
+  height: 72%;
   border-bottom: 1px solid #bcbcbc;
+  overflow: hidden;
+  padding-bottom: 15px;
 `;
 
 const StLikes = styled.div`
   width: 100%;
-  height: 20%;
+  height: 12%;
   border-bottom: 1px solid #bcbcbc;
 `;
 
 const StcommentInput = styled.div`
   width: 100%;
-  height: 10%;
+  height: 6%;
 `;
 
 const PostTime = styled.p`
