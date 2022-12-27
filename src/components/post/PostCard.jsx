@@ -1,12 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 import UserBox from "../postElements/UserBox";
-import IconBox from "../postElements/IconBox";
 import Image from "../postElements/Image";
 import CountLike from "../postElements/CountLike";
 import Content from "../postElements/Content";
-
+import CommentLogo from "../../assets/comment.png";
+import DmLogo from "../../assets/dm.png";
+import { AiOutlineHeart } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 function PostCard() {
+  const navigate = useNavigate();
+
+  const onDetailPage = () => {
+    navigate("/posts");
+  };
   return (
     <Wrapper>
       <Post>
@@ -16,14 +23,14 @@ function PostCard() {
         {/* </Info> */}
         <Image />
         <PostContent>
-          <IconBox />
-          {/* <ReactionWrapper>
+          <ReactionWrapper>
             <AiOutlineHeart size={25} />
             <img
               src={CommentLogo}
               style={{ width: "23px", marginLeft: "10px" }}
               class="icon"
               alt=""
+              onClick={onDetailPage}
             />
             <img
               src={DmLogo}
@@ -32,7 +39,7 @@ function PostCard() {
               alt=""
             />
             <img src="img/save.PNG" class="save icon" alt="" />
-          </ReactionWrapper> */}
+          </ReactionWrapper>
           {/* <Likes>좋아요 1만개</Likes> */}
           <CountLike />
           <Content />
@@ -187,12 +194,12 @@ const CommentBox = styled.input`
 //     opacity: 0.5;
 //   }
 
-// const ReactionWrapper = styled.div`
-//   width: 100%;
-//   height: 50px;
-//   display: flex;
-//   align-items: center;
-// `;
+const ReactionWrapper = styled.div`
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+`;
 
 //   .reaction-wrapper .icon {
 //     height: 25px;

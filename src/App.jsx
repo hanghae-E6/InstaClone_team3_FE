@@ -3,6 +3,7 @@ import Demo from "./routes/Demo";
 import Home from "./routes/Home";
 import Signin from "./routes/Signin";
 import Signup from "./routes/Signup";
+import DetailPost from "./components/post/DetailPost";
 import CommentTest from "./routes/CommentTest";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/signin" element={<Signin />} />
+        <Route exact path="/posts" element={<DetailPost />} />
       </Routes>
     </Router>
   );
