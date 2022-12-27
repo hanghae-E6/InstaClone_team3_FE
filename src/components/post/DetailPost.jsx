@@ -82,7 +82,7 @@ function DetailPost() {
             <Content
               contentInfo={{ nickname: post?.nickname, content: post?.content }}
             />
-            <CommentList comments={comments} />
+            <CommentList comments={comments} postId={params?.postId} />
           </StContent>
           <StLikes>
             {/* 댓글 아이콘 클릭 시 모달 중복으로 뜨는 문제로 수정했습니다.-전유진 */}

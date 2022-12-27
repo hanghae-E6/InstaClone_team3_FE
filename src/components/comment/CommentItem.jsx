@@ -1,18 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import CommentOptions from "./CommentOptions";
-import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 
-const CommentItem = ({ commentInfo }) => {
+const CommentItem = ({ commentInfo, postId }) => {
   const { nickname, comment } = commentInfo;
-  const [like, setLike] = useState(false);
-
-  const onToggleLikeButton = () => {
-    setLike(!like);
-  };
-
-  console.log(commentInfo);
 
   return (
     <>
@@ -30,12 +22,13 @@ const CommentItem = ({ commentInfo }) => {
             </Nickname>
             {comment}
           </Comment>
-          <LikeButton onClick={onToggleLikeButton}>
-            {!like ? <MdFavoriteBorder /> : <MdFavorite />}
-          </LikeButton>
         </CommentBox>
       </CommentWrapper>
-      <CommentOptions userId={commentInfo.userId} />
+      <CommentOptions
+        userId={commentInfo.userId}
+        commentId={commentInfo.commentId}
+        postId={postId}
+      />
     </>
   );
 };
