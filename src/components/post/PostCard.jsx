@@ -10,7 +10,7 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import useInputs from "../../hooks/useInputs";
 import { useDispatch } from "react-redux";
-import { __addComment } from "../../lib/commentApi";
+import { __addComment } from "../../apis/commentApi";
 
 function PostCard({ post }) {
   const navigate = useNavigate();
@@ -73,7 +73,7 @@ function PostCard({ post }) {
             게시글 게시글 게시글 게시글 게시글 게시글 게시글 게시글 게시글
             게시글 게시글 게시글 게시글 게시글
           </Description> */}
-          <PostTime>2분 전</PostTime>
+          <PostTime>{createdAt}</PostTime>
         </PostContent>
         <CommentWrapper>
           <img src="img/smile.PNG" className="icon" alt="" />

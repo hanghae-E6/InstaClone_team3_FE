@@ -54,6 +54,7 @@ function DetailPost() {
           <StLikes>
             <IconBox />
             <CountLike likes={likes} />
+            <PostTime>{createdAt}</PostTime>
           </StLikes>
           <StcommentInput>댓글 인풋 컴포넌트 들어갈 자리</StcommentInput>
         </StDetail>
@@ -109,5 +110,11 @@ const StLikes = styled.div`
 const StcommentInput = styled.div`
   width: 100%;
   height: 10%;
+`;
+
+const PostTime = styled.p`
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 12px;
+  margin-top: 10px;
 `;
 export default DetailPost;
