@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import CommentOptions from "./CommentOptions";
@@ -72,9 +72,4 @@ const Comment = styled.span`
   color: rgb(38, 38, 38);
 `;
 
-const LikeButton = styled.span`
-  cursor: pointer;
-  margin-left: 20px;
-`;
-
-export default CommentItem;
+export default memo(CommentItem);
