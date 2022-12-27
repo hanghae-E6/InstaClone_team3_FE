@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import CommentItem from "./CommentItem";
 
-const CommentList = () => {
+const CommentList = ({ comments }) => {
+  console.log("댓글목록:", comments);
   return (
     <CommentListWrapper>
       <CommentListBox>

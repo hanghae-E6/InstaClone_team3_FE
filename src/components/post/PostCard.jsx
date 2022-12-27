@@ -5,7 +5,7 @@ import Image from "../postElements/Image";
 import CountLike from "../postElements/CountLike";
 import Content from "../postElements/Content";
 import CommentLogo from "../../assets/comment.png";
-import DmLogo from "../../assets/dm.png";
+// import DmLogo from "../../assets/dm.png";
 import { AiOutlineHeart } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import useInputs from "../../hooks/useInputs";
@@ -26,10 +26,10 @@ function PostCard({ post }) {
     postId,
     postImg,
   } = post;
+
   // 댓글 등록
   const onAddComment = () => {
-    // 7 => 테스트로 하드코딩함. To-Do: postId로 변경 필요
-    dispatch(__addComment({ postId: 7, comment })).then((res) => {
+    dispatch(__addComment({ postId, comment })).then((res) => {
       console.log(res);
       setComment("");
     });
@@ -57,12 +57,12 @@ function PostCard({ post }) {
               alt=""
               onClick={onDetailPage}
             />
-            <img
+            {/* <img
               src={DmLogo}
               style={{ width: "22px", marginLeft: "10px" }}
               className="icon"
               alt=""
-            />
+            /> */}
             <img src="img/save.PNG" className="save icon" alt="" />
           </ReactionWrapper>
           {/* <Likes>좋아요 1만개</Likes> */}
@@ -79,13 +79,11 @@ function PostCard({ post }) {
           <img src="img/smile.PNG" className="icon" alt="" />
           <CommentBox
             type="text"
-            placeholder="Add a comment"
+            placeholder="댓글 달기"
             value={comment}
             onChange={commentHandler}
           />
-          <button className="comment-btn" onClick={onAddComment}>
-            게시
-          </button>
+          <CommentBtn onClick={onAddComment}>게시</CommentBtn>
         </CommentWrapper>
       </Post>
     </Wrapper>
@@ -168,6 +166,7 @@ const Post = styled.div`
 
 const PostContent = styled.div`
   width: 100%;
+  padding: 12px;
   /* padding: 0 10px; */
 `;
 
@@ -207,12 +206,22 @@ const CommentWrapper = styled.div`
 
 const CommentBox = styled.input`
   width: 80%;
-  height: 100%;
+  height: 80%;
   border: none;
   outline: none;
   font-size: 14px;
 `;
 
+const CommentBtn = styled.span`
+  width: 50px;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: rgb(0, 162, 255);
+  cursor: pointer;
+  font-weight: bold;
+`;
 //   .comment-btn,
 //   .action-btn {
 //     width: 70px;

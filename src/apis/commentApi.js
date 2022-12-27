@@ -13,8 +13,10 @@ export const __addComment = createAsyncThunk(
       console.log(response);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      const { errorMessage } = error.response.data;
-      alert(errorMessage);
+      const { status, data } = error.response;
+      if (status === 404 || status === 401) {
+        alert(data.errorMessage);
+      }
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -29,11 +31,13 @@ export const __removeComment = createAsyncThunk(
       const response = await api.delete(
         `api/posts/${postId}/comments/${commentId}`
       );
-      console.log(response);
+
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      const { errorMessage } = error.response.data;
-      alert(errorMessage);
+      const { status, data } = error.response;
+      if (status === 404 || status === 401) {
+        alert(data.errorMessage);
+      }
       return thunkAPI.rejectWithValue(error);
     }
   }
