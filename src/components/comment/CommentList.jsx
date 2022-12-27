@@ -3,14 +3,13 @@ import styled from "styled-components";
 import CommentItem from "./CommentItem";
 
 const CommentList = ({ comments }) => {
-  console.log("댓글목록:", comments);
   return (
     <CommentListWrapper>
       <CommentListBox>
-        <CommentItem />
-        <CommentItem />
-        <CommentItem />
-        <CommentItem />
+        {comments &&
+          comments.map((comment) => (
+            <CommentItem key={comment.commentId} commentInfo={comment} />
+          ))}
       </CommentListBox>
     </CommentListWrapper>
   );

@@ -16,27 +16,22 @@ function PostCard({ post }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [comment, setComment, commentHandler] = useInputs("");
-  const {
-    content,
-    createdAt,
-    updatedAt,
-    likes,
-    nickname,
-    userId,
-    postId,
-    postImg,
-  } = post;
+  const { content, createdAt, likes, nickname, userId, postId, postImg } = post;
 
   // 댓글 등록
   const onAddComment = () => {
     dispatch(__addComment({ postId, comment })).then((res) => {
-      console.log(res);
-      setComment("");
+      const { type } = res;
+
+      if (type === "addComment/fulfilled") {
+        alert("댓글이 정상적으로 등록되었습니다.");
+        setComment("");
+      }
     });
   };
 
   const onDetailPage = () => {
-    navigate("/posts", { state: post });
+    navigate(`/posts/${postId}`);
   };
 
   return (
