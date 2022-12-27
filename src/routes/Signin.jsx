@@ -98,9 +98,9 @@ const Signin = () => {
                   onChange={inputEmail}
                   onBlur={onBlurEmail}
                   style={{ margin: "0 40px 10px" }}
-                  placeholder="사용자 이름 또는 이메일"
+                  placeholder="이메일"
                 />
-                <label>사용자 이름 또는 이메일</label>
+                <label>이메일</label>
               </div>
               <div className="signin-input-box">
                 <Input
