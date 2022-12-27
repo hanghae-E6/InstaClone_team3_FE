@@ -27,10 +27,10 @@ export const __getPostsByPageno = createAsyncThunk(
       const response = await api.get(`/api/posts/page?pageno=${pageno}`);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      const { status, data } = error.response;
-      if (status === 404) {
-        alert(data.errorMessage);
-      }
+      // const { status, data } = error.response;
+      // if (status === 404) {
+      //   alert(data.errorMessage);
+      // }
       return thunkAPI.rejectWithValue(error);
     }
   }
