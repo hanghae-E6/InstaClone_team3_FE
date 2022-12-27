@@ -10,7 +10,7 @@ import ImgUpload from "../../assets/imgupload.png";
 import AWS from "aws-sdk";
 // import { __addPosts } from "../../apis/postApi";
 import axios from "../../../node_modules/axios/index";
-import api from "../../apis/api";
+import imageApi from "../../apis/api";
 
 function AddPost() {
   const navigate = useNavigate();
@@ -33,8 +33,7 @@ function AddPost() {
     setPrevImg(
       `https://imagebucketforcloneinsta.s3.ap-northeast-2.amazonaws.com/${file.name}`
     );
-    setPostImg(file.name);
-    console.log("냐하", file.name);
+    setPostImg(file);
     // S3 SDK에 내장된 업로드 함수
     const upload = new AWS.S3.ManagedUpload({
       params: {
@@ -64,11 +63,13 @@ function AddPost() {
   const HandleSubmitPost = async (e) => {
     e.preventDefault();
     // dispatch(__addPosts({ postImg, content }));
+    const formData = new FormData();
+    formData.append("postImg", postImg);
+    formData.append("content", content);
+
     try {
-      await api.post("/api/posts", {
-        postImg,
-        content: new FormData(content),
-      });
+      const res = await imageApi.post("/api/posts", formData);
+      console.log(res);
     } catch (e) {
       alert(e.response.data.errorMessage);
     }
