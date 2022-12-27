@@ -1,14 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import CommentOptions from "./CommentOptions";
-import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 
-const CommentItem = () => {
-  const [like, setLike] = useState(false);
-  const onToggleLikeButton = () => {
-    setLike(!like);
-  };
+const CommentItem = ({ commentInfo, postId }) => {
+  const { nickname, comment } = commentInfo;
 
   return (
     <>
@@ -22,18 +18,17 @@ const CommentItem = () => {
         <CommentBox>
           <Comment>
             <Nickname>
-              <Link>inul.d</Link>
+              <Link>{nickname}</Link>
             </Nickname>
-            so sweet gini bojoku reekk😍😍 masak romantis ,jd tambah asyik
-            masak’ane enak poll 👍 besok ya jam 8,30 di mnc tv , monggo sayang.
-            oh iya utk wilayah surabaya channel MNC TV 41 UHF ya ✨💋💋💋
+            {comment}
           </Comment>
-          <LikeButton onClick={onToggleLikeButton}>
-            {!like ? <MdFavoriteBorder /> : <MdFavorite />}
-          </LikeButton>
         </CommentBox>
       </CommentWrapper>
-      <CommentOptions />
+      <CommentOptions
+        userId={commentInfo.userId}
+        commentId={commentInfo.commentId}
+        postId={postId}
+      />
     </>
   );
 };

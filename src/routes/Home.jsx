@@ -82,7 +82,7 @@ const Home = () => {
           {isLoaded && <Loader />}
         </div>
       ) : (
-        ""
+        <>로딩 중입니다.</>
       )}
     </Template>
   ) : (
