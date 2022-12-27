@@ -7,9 +7,22 @@ import CountLike from "../postElements/CountLike";
 import Content from "../postElements/Content";
 import { CgClose } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router";
+import CommentList from "../comment/CommentList";
 
 function DetailPost() {
   const navigate = useNavigate();
+  const { state } = useLocation();
+  const {
+    content,
+    createdAt,
+    updatedAt,
+    likes,
+    nickname,
+    userId,
+    postId,
+    postImg,
+  } = state;
   return (
     <BackGround>
       <CgClose
@@ -28,19 +41,19 @@ function DetailPost() {
       />
       <Wrapper>
         <StImage>
-          <Image />
+          <Image src={postImg} />
         </StImage>
         <StDetail>
           <StProfile>
-            <UserBox />
+            <UserBox userInfo={{ userId, nickname }} />
           </StProfile>
           <StContent>
-            <Content />
-            댓글리스트 들어갈 자리
+            <Content contentInfo={{ nickname, content }} />
+            <CommentList />
           </StContent>
           <StLikes>
             <IconBox />
-            <CountLike />
+            <CountLike likes={likes} />
           </StLikes>
           <StcommentInput>댓글 인풋 컴포넌트 들어갈 자리</StcommentInput>
         </StDetail>
@@ -60,7 +73,7 @@ const BackGround = styled.div`
 const Wrapper = styled.div`
   background-color: white;
   display: flex;
-  width: 700px;
+  width: 800px;
   height: 450px;
   border-radius: 10px;
 `;

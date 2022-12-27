@@ -16,7 +16,16 @@ function PostCard({ post }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [comment, setComment, commentHandler] = useInputs("");
-
+  const {
+    content,
+    createdAt,
+    updatedAt,
+    likes,
+    nickname,
+    userId,
+    postId,
+    postImg,
+  } = post;
   // 댓글 등록
   const onAddComment = () => {
     // 7 => 테스트로 하드코딩함. To-Do: postId로 변경 필요
@@ -27,38 +36,38 @@ function PostCard({ post }) {
   };
 
   const onDetailPage = () => {
-    navigate("/posts");
+    navigate("/posts", { state: post });
   };
 
   return (
     <Wrapper>
       <Post>
         {/* <Info> */}
-        <UserBox />
+        <UserBox userInfo={{ userId, nickname }} />
         {/* 더보기 옵션 들어갈곳 */}
         {/* </Info> */}
-        <Image />
+        <Image src={postImg} />
         <PostContent>
           <ReactionWrapper>
             <AiOutlineHeart size={25} />
             <img
               src={CommentLogo}
               style={{ width: "23px", marginLeft: "10px" }}
-              class="icon"
+              className="icon"
               alt=""
               onClick={onDetailPage}
             />
             <img
               src={DmLogo}
               style={{ width: "22px", marginLeft: "10px" }}
-              class="icon"
+              className="icon"
               alt=""
             />
-            <img src="img/save.PNG" class="save icon" alt="" />
+            <img src="img/save.PNG" className="save icon" alt="" />
           </ReactionWrapper>
           {/* <Likes>좋아요 1만개</Likes> */}
-          <CountLike />
-          <Content />
+          <CountLike likes={likes} />
+          <Content contentInfo={{ nickname, content }} />
           {/* <Description>
             <DesSpan>zzzhaehae </DesSpan> 게시글 게시글 게시글 게시글 게시글
             게시글 게시글 게시글 게시글 게시글 게시글 게시글 게시글 게시글

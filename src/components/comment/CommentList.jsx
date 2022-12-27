@@ -19,10 +19,15 @@ const CommentListWrapper = styled.div`
   flex-grow: 1;
   flex-shrink: 1;
   margin-bottom: 4px;
-  min-height: 0;
   overflow: auto;
   position: relative;
   overflow-x: hidden;
+  height: inherit;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
 `;
 
 const CommentListBox = styled.ul`

@@ -1,12 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-function Content() {
+function Content({ contentInfo }) {
   return (
     <Description>
-      <DesSpan>zzzhaehae </DesSpan> 게시글 게시글 게시글 게시글 게시글 게시글
-      게시글 게시글 게시글 게시글 게시글 게시글 게시글 게시글 게시글 게시글
-      게시글 게시글 게시글
+      <DesSpan>{contentInfo?.nickname} </DesSpan> {contentInfo?.content}
     </Description>
   );
 }
