@@ -5,30 +5,57 @@ import IconBox from "../postElements/IconBox";
 import Image from "../postElements/Image";
 import CountLike from "../postElements/CountLike";
 import Content from "../postElements/Content";
+import { CgClose } from "react-icons/cg";
+import { useNavigate } from "react-router-dom";
 
-function DetailPost({ onClose }) {
+function DetailPost() {
+  const navigate = useNavigate();
   return (
-    <Wrapper>
-      <StImage>
-        <Image />
-      </StImage>
-      <StDetail>
-        <StProfile>
-          <UserBox />
-        </StProfile>
-        <StContent>
-          <Content />
-          댓글리스트 들어갈 자리
-        </StContent>
-        <StLikes>
-          <IconBox />
-          <CountLike />
-        </StLikes>
-        <StcommentInput>댓글 인풋 컴포넌트 들어갈 자리</StcommentInput>
-      </StDetail>
-    </Wrapper>
+    <BackGround>
+      <CgClose
+        className="close"
+        size={25}
+        onClick={() => {
+          navigate("/");
+        }}
+        style={{
+          color: "white",
+          position: "absolute",
+          right: "4rem",
+          top: "3rem",
+          cursor: "pointer",
+        }}
+      />
+      <Wrapper>
+        <StImage>
+          <Image />
+        </StImage>
+        <StDetail>
+          <StProfile>
+            <UserBox />
+          </StProfile>
+          <StContent>
+            <Content />
+            댓글리스트 들어갈 자리
+          </StContent>
+          <StLikes>
+            <IconBox />
+            <CountLike />
+          </StLikes>
+          <StcommentInput>댓글 인풋 컴포넌트 들어갈 자리</StcommentInput>
+        </StDetail>
+      </Wrapper>
+    </BackGround>
   );
 }
+
+const BackGround = styled.div`
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+`;
 
 const Wrapper = styled.div`
   background-color: white;
