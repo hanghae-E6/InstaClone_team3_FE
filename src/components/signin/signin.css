@@ -1,25 +1,25 @@
-.signup-input-box {
+.signin-input-box {
   position: relative;
 }
 
-.signup-input {
+.signin-input {
   width: 250px;
 }
 
-.signup-input:focus {
+.signin-input:focus {
   border-color: #a8a8a8;
 }
 
-.signup-input:not(:placeholder-shown) {
+.signin-input:not(:placeholder-shown) {
   padding-top: 10px;
   padding-bottom: 0px;
 }
 
-.signup-input::placeholder {
+.signin-input::placeholder {
   color: transparent;
 }
 
-.signup-input:placeholder-shown + label {
+.signin-input:placeholder-shown + label {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
   color: rgb(142, 142, 142);
@@ -28,7 +28,7 @@
   margin-top: 12px;
 }
 
-.signup-input:not(:placeholder-shown) + label,
+.signin-input:not(:placeholder-shown) + label,
 label {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
@@ -42,21 +42,15 @@ label {
   transition: all 0.1s ease;
 }
 
-.message {
-  position: absolute;
-  margin-left: -71px;
-  margin-top: 7px;
-}
-
-.signup-button:disabled {
+.signin-button:disabled {
   background-color: #4db5f9;
   cursor: auto;
 }
 
-.signup-button:not(:disabled) {
+.signin-button:not(:disabled) {
   background-color: #0095f6;
 }
 
-.signup-button:not(:disabled):hover {
+.signin-button:not(:disabled):hover {
   background-color: #1877f2;
 }

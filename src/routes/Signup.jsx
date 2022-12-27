@@ -4,7 +4,6 @@ import { useNavigate } from "../../node_modules/react-router-dom/dist/index";
 import { SIGNUP_VALIDATION } from "../constants/validation";
 
 import axios from "../../node_modules/axios/index";
-
 import "../components/signup/signup.css";
 import styled from "styled-components";
 import Input from "../components/common/Input";
@@ -24,13 +23,18 @@ const Signup = () => {
     "",
     SIGNUP_VALIDATION.PASSWORD
   );
+
+  const [emailDuplicateCheck, setEmailDuplicateCheck] = useState(false);
+
+  const [nicknameDuplicateCheck, setNicknameDuplicateCheck] = useState(false);
+
   const [emailMessage, setEmailMessage] = useState(false);
 
   const [nicknameMessage, setNicknameMessage] = useState(false);
 
   const [passwordMessage, setPasswordMessage] = useState(false);
 
-  const [passwordToggle, setPasswordToggle] = useState(false);
+  const [showStatusToggle, setShowStatusToggle] = useState(false);
 
   const showPassword = {
     type: "password",
@@ -49,8 +53,8 @@ const Signup = () => {
   const [passwordShowStatus, setPasswordShowstatus] = useState(showPassword);
 
   const togglePW = () => {
-    setPasswordToggle((prev) => !prev);
-    if (passwordToggle) {
+    setShowStatusToggle((prev) => !prev);
+    if (showStatusToggle) {
       setPasswordShowstatus(hidePassword);
     } else {
       setPasswordShowstatus(showPassword);
@@ -64,15 +68,19 @@ const Signup = () => {
       axios
         .get(
           process.env.REACT_APP_API_ENDPOINT +
-            `/api/user/signup/findDup?email={email}`
+            `/api/user/signup/findDup?email=${email}`
         )
-        .then((res) =>
-          res.status === 200
-            ? setEmailMessage(SIGNUP_VALIDATION.MESSAGE.SUCCESS)
-            : setEmailMessage(SIGNUP_VALIDATION.MESSAGE.WARNING)
-        )
-        .catch((e) => alert(e));
+        .then((res) => {
+          res.status === 200 &&
+            setEmailMessage(SIGNUP_VALIDATION.MESSAGE.SUCCESS);
+          setEmailDuplicateCheck(true);
+        })
+        .catch(() => {
+          setEmailMessage(SIGNUP_VALIDATION.MESSAGE.WARNING);
+          setEmailDuplicateCheck(false);
+        });
     }
+    checkInputValidated();
   };
 
   const onBlurNickname = () => {
@@ -82,15 +90,19 @@ const Signup = () => {
       axios
         .get(
           process.env.REACT_APP_API_ENDPOINT +
-            `/api/user/signup/findDup?nickname={nickname}`
+            `/api/user/signup/findDup?nickname=${nickname}`
         )
-        .then((res) =>
-          res.status === 200
-            ? setNicknameMessage(SIGNUP_VALIDATION.MESSAGE.SUCCESS)
-            : setNicknameMessage(SIGNUP_VALIDATION.MESSAGE.WARNING)
-        )
-        .catch((e) => alert(e));
+        .then((res) => {
+          res.status === 200 &&
+            setNicknameMessage(SIGNUP_VALIDATION.MESSAGE.SUCCESS);
+          setNicknameDuplicateCheck(true);
+        })
+        .catch((e) => {
+          setNicknameMessage(SIGNUP_VALIDATION.MESSAGE.WARNING);
+          setNicknameDuplicateCheck(false);
+        });
     }
+    checkInputValidated();
   };
 
   const onBlurPassword = () => {
@@ -99,21 +111,30 @@ const Signup = () => {
     } else {
       setPasswordMessage(SIGNUP_VALIDATION.MESSAGE.SUCCESS);
     }
+    checkInputValidated();
   };
 
+  const [buttonDisableToggle, setButtonDisableToggle] = useState(true);
+
   const checkInputValidated = () => {
-    return (
+    if (
       isEmailValid &&
       isNicknameValid &&
       isPasswordValid &&
-      email &&
-      nickname &&
-      password
-    );
+      emailDuplicateCheck &&
+      nicknameDuplicateCheck &&
+      Boolean(email) &&
+      Boolean(nickname) &&
+      Boolean(password)
+    ) {
+      setButtonDisableToggle(false);
+    } else {
+      setButtonDisableToggle(true);
+    }
   };
 
   const postUserInfo = () => {
-    if (checkInputValidated()) {
+    if (!buttonDisableToggle) {
       axios
         .post(process.env.REACT_APP_API_ENDPOINT + "/api/user/signup", {
           email,
@@ -121,7 +142,7 @@ const Signup = () => {
           password,
           profileImg: null,
         })
-        .then(navigate("/signin"))
+        .then((res) => res.status === 201 && navigate("/signin"))
         .catch((e) => alert(e));
       return;
     }
@@ -135,7 +156,7 @@ const Signup = () => {
             <Logo>Instar⭐gram</Logo>
             <SignupBox>
               <Intro>친구들의 사진과 동영상을 보려면 가입하세요.</Intro>
-              <div className="email-box">
+              <div className="signup-input-box">
                 <Input
                   className="signup-input"
                   placeholder="이메일 주소"
@@ -149,7 +170,7 @@ const Signup = () => {
                 <label>이메일 주소</label>
                 <span className="message">{emailMessage}</span>
               </div>
-              <div className="nickname-box">
+              <div className="signup-input-box">
                 <Input
                   className="signup-input"
                   placeholder="사용자 이름"
@@ -181,7 +202,7 @@ const Signup = () => {
                   </>
                 )}
               </div>
-              <div className="password-box">
+              <div className="signup-input-box">
                 <Input
                   className="signup-input"
                   type={passwordShowStatus.type}
@@ -212,11 +233,14 @@ const Signup = () => {
                 )}
               </div>
               <Button
+                className="signup-button"
+                type="button"
                 onClick={postUserInfo}
                 margin="20px 40px 10px"
                 padding="6px 16px"
                 fontSize="initial"
                 borderRadius="7px"
+                disabled={buttonDisableToggle}
               >
                 가입
               </Button>

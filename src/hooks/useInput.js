@@ -18,7 +18,7 @@ const useInput = (initValue, validationParam, randomStringParam) => {
   };
 
   useEffect(() => {
-    if (value !== initValue) {
+    if (value !== initValue && validationParam) {
       validate();
     }
   }, [value]);
@@ -33,7 +33,7 @@ const useInput = (initValue, validationParam, randomStringParam) => {
 
   const onChange = (e) => {
     setValue(e.target.value);
-    validate();
+    if (validationParam) validate();
   };
 
   const onClickRandomString = () => {

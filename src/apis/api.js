@@ -11,6 +11,12 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(function (config) {
+  const accessToken = localStorage.getItem("accessToken");
+  const refreshToken = localStorage.getItem("refreshToken");
+
+  config.headers.accesstoken = `${accessToken}`;
+  config.headers.refreshtoken = `${refreshToken}`;
+
   return config;
 });
 
