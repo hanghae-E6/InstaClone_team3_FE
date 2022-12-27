@@ -47,7 +47,8 @@ const StyledButton = styled.button`
   background-color: ${(props) =>
     props.btnTheme === "primary" ? Colors.skyblue : Colors.grey};
   :hover {
-    opacity: 0.75;
+    opacity: ${(props) =>
+      props.disabled === true || props.disabled === false ? "inherit" : 0.75};
   }
 `;
 
