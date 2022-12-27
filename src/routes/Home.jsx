@@ -14,7 +14,7 @@ const Home = () => {
 
   const getInitData = async () => {
     setIsLoaded(true);
-    dispatch(__getPostsByPageno(pageno)).then((res) => {
+    dispatch(__getPostsByPageno(1)).then((res) => {
       const { type, payload } = res;
       if (type === "getPostsByPageno/fulfilled") {
         setPosts(payload.posts);
