@@ -7,13 +7,9 @@ import styled from "styled-components";
 import Input from "../components/common/Input";
 import Button from "../components/common/Button";
 import SliderContainer from "../components/signin/SliderContainer";
-import axios from "../../node_modules/axios/index";
-import { __signin } from "../lib/userApi";
-import { useDispatch } from "../../node_modules/react-redux/es/exports";
-import api from "../lib/api";
+import api from "../apis/api";
 
 const Signin = () => {
-  const dispatch = useDispatch;
   const [email, , inputEmail] = useInput("");
 
   const [password, , inputPassword] = useInput("");
