@@ -11,6 +11,7 @@ Section.propTypes = {
 
 const DefaultSection = styled.div`
   display: flex;
+  flex-direction: column;
   margin: 0 auto;
   margin-left: 224px;
   min-width: 935px;
@@ -18,6 +19,7 @@ const DefaultSection = styled.div`
   padding: calc(4vh) 20px 0;
   box-sizing: content-box;
   justify-content: center;
+  align-items: center;
   padding: 40px 20px;
   background-color: #fafafa;
 `;
