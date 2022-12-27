@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Colors } from "../../styles/colors";
 import {
@@ -6,9 +6,21 @@ import {
   MdAddCircleOutline,
   MdAccountCircle,
 } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+// import Modal from "../common/Modal";
+// import AddPost from "../post/AddPost";
 
 const Header = () => {
+  const navigate = useNavigate();
+  // const [flag, setFlag] = useState(false);
+
+  // const showPopup = () => {
+  //   setFlag(true);
+  // };
+
+  // const closePopup = () => {
+  //   setFlag(false);
+  // };
   return (
     <HeaderWrapper>
       <h1>Instar⭐gram</h1>
@@ -19,7 +31,10 @@ const Header = () => {
           </Link>
         </li>
         <li>
-          <Link>
+          <Link to="/write">
+            {/* <Modal visible={flag} onClose={closePopup}>
+              <AddPost></AddPost>
+            </Modal> */}
             <MdAddCircleOutline />
             만들기
           </Link>

@@ -3,6 +3,8 @@ import Demo from "./routes/Demo";
 import Main from "./routes/Main";
 import Signup from "./routes/Signup";
 import DetailPost from "./components/post/DetailPost";
+// import CommentTest from "./routes/CommentTest";
+import AddPost from "./components/post/AddPost";
 
 function App() {
   return (
@@ -12,6 +14,7 @@ function App() {
         <Route exact path="/" element={<Main />} />
         <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/posts/:postId" element={<DetailPost />} />
+        <Route exact path="/write" element={<AddPost />} />
       </Routes>
     </Router>
   );

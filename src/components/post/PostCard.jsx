@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import UserBox from "../postElements/UserBox";
 import Image from "../postElements/Image";
