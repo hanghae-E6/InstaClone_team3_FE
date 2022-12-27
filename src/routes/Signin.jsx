@@ -7,7 +7,7 @@ import styled from "styled-components";
 import Input from "../components/common/Input";
 import Button from "../components/common/Button";
 import SliderContainer from "../components/signin/SliderContainer";
-import api from "../apis/api";
+import axios from "../../node_modules/axios/index";
 
 const Signin = () => {
   const [email, , inputEmail] = useInput("");
@@ -43,8 +43,8 @@ const Signin = () => {
 
   const onBlurEmail = () => {
     if (password && email) {
-      api
-        .post("/api/user/login", {
+      axios
+        .post(process.env.REACT_APP_API_ENDPOINT + "/api/user/login", {
           email,
           password,
         })
@@ -64,8 +64,8 @@ const Signin = () => {
 
   const onBlurPassword = () => {
     if (email && password) {
-      api
-        .post("/api/user/login", {
+      axios
+        .post(process.env.REACT_APP_API_ENDPOINT + "/api/user/login", {
           email,
           password,
         })
