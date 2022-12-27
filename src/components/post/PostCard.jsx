@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { __addComment } from "../../lib/commentApi";
 
 function PostCard({ post }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [comment, setComment, commentHandler] = useInputs("");
 
@@ -24,10 +25,6 @@ function PostCard({ post }) {
       setComment("");
     });
   };
-
-
-function PostCard() {
-  const navigate = useNavigate();
 
   const onDetailPage = () => {
     navigate("/posts");
