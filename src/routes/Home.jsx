@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Template from "../components/layout/Template";
 import PostCard from "../components/post/PostCard";
 import { __getPostsByPageno } from "../apis/postApi";
@@ -12,6 +12,7 @@ const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [posts, setPosts] = useState([]);
 
+  // 초기 데이터 조회
   const getInitData = async () => {
     setIsLoaded(true);
     dispatch(__getPostsByPageno(1)).then((res) => {
@@ -23,6 +24,7 @@ const Home = () => {
     setIsLoaded(false);
   };
 
+  // 추가 데이터 조회
   const getMoreData = useCallback(async () => {
     // 추가 데이터를 로드하는 상태로 전환
     setIsLoaded(true);
@@ -53,7 +55,9 @@ const Home = () => {
     [getMoreData, isLoaded]
   );
 
+  // 화면 최초 로드
   useEffect(() => {
+    pageno = 1; // 메인 진입 시 pageno 초기화
     getInitData();
   }, []);
 
