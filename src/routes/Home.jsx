@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Template from "../components/layout/Template";
 import PostCard from "../components/post/PostCard";
-import { __getPosts } from "../lib/postApi";
+import { __getPosts } from "../apis/postApi";
 
 const Home = () => {
   const dispatch = useDispatch();

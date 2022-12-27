@@ -20,6 +20,25 @@ export const __addComment = createAsyncThunk(
   }
 );
 
+// 댓글 삭제
+export const __removeComment = createAsyncThunk(
+  "removeComment",
+  async (payload, thunkAPI) => {
+    const { postId, commentId } = payload;
+    try {
+      const response = await api.delete(
+        `api/posts/${postId}/comments/${commentId}`
+      );
+      console.log(response);
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+      const { errorMessage } = error.response.data;
+      alert(errorMessage);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 // 댓글 번역
 export const __getTranslatedText = createAsyncThunk(
   "getTranslatedText",
