@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import UserBox from "../postElements/UserBox";
-import IconBox from "../postElements/IconBox";
+import { AiOutlineHeart } from "react-icons/ai";
+// import CommentLogo from "../../assets/comment.png";
 import Image from "../postElements/Image";
 import CountLike from "../postElements/CountLike";
 import Content from "../postElements/Content";
@@ -9,20 +10,30 @@ import { CgClose } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router";
 import CommentList from "../comment/CommentList";
+import { useDispatch } from "react-redux";
+import { __getPostDetail } from "../../apis/postApi";
+// import IconBox from "../postElements/IconBox";
 
 function DetailPost() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { state } = useLocation();
-  const {
-    content,
-    createdAt,
-    updatedAt,
-    likes,
-    nickname,
-    userId,
-    postId,
-    postImg,
-  } = state;
+  const [comments, setComments] = useState([]);
+
+  const { content, createdAt, likes, nickname, userId, postId, postImg } =
+    state;
+
+  // 화면 로드 시 게시글상세 조회
+  useEffect(() => {
+    dispatch(__getPostDetail(postId)).then((res) => {
+      const { type, payload } = res;
+
+      if (type === "getPostDetail/fulfilled") {
+        setComments(payload.comments);
+      }
+    });
+  }, []);
+
   return (
     <BackGround>
       <CgClose
@@ -49,10 +60,15 @@ function DetailPost() {
           </StProfile>
           <StContent>
             <Content contentInfo={{ nickname, content }} />
-            <CommentList />
+            <CommentList comments={comments} />
           </StContent>
           <StLikes>
-            <IconBox />
+            {/* 댓글 아이콘 클릭 시 모달 중복으로 뜨는 문제로 수정했습니다.-전유진 */}
+            {/* <IconBox/> */}
+            <ReactionWrapper>
+              <AiOutlineHeart size={25} />
+              <img src="img/save.PNG" className="save icon" alt="" />
+            </ReactionWrapper>
             <CountLike likes={likes} />
             <PostTime>{createdAt}</PostTime>
           </StLikes>
@@ -118,4 +134,12 @@ const PostTime = styled.p`
   font-size: 12px;
   margin-top: 10px;
 `;
+
+const ReactionWrapper = styled.div`
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+`;
+
 export default DetailPost;

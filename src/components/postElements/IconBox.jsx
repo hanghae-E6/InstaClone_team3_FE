@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { AiOutlineHeart } from "react-icons/ai";
 import CommentLogo from "../../assets/comment.png";
-import DmLogo from "../../assets/dm.png";
+// import DmLogo from "../../assets/dm.png";
 import Modal from "../common/Modal";
 import DetailPost from "../post/DetailPost";
 
@@ -29,12 +29,12 @@ function IconBox() {
       <Modal visible={flag} onClose={closePopup}>
         <DetailPost></DetailPost>
       </Modal>
-      <img
+      {/* <img
         src={DmLogo}
         style={{ width: "22px", marginLeft: "10px" }}
         className="icon"
         alt=""
-      />
+      /> */}
       <img src="img/save.PNG" className="save icon" alt="" />
     </ReactionWrapper>
   );

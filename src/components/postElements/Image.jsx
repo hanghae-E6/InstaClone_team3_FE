@@ -14,7 +14,7 @@ function Image({ src }) {
 
 const ImageWrapper = styled.div`
   width: 100%;
-  height: auto;
+  height: 100%;
   text-align: center;
   display: table;
 `;
