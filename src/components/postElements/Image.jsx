@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import PostImage from "../../assets/수지.jpg";
+// import PostImage from "../../assets/수지.jpg";
 
-function Image() {
+function Image({ src }) {
   return (
     <ImageWrapper>
       <PostingImage>
-        <Element src={PostImage} alt="" />
+        <Element src={src} alt="" />
       </PostingImage>
     </ImageWrapper>
   );

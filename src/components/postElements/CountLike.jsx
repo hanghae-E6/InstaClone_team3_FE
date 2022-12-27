@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-function CountLike() {
-  return <Likes>좋아요 1만개</Likes>;
+function CountLike({ likes }) {
+  return <Likes>좋아요 {likes}개</Likes>;
 }
 
 const Likes = styled.p`

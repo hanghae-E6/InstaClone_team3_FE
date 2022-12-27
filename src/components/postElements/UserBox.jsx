@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import ProfileImg from "../../assets/ProfileImg.png";
 
-function UserBox() {
+function UserBox({ userInfo }) {
   return (
     <Info>
       <User>
@@ -13,7 +13,7 @@ function UserBox() {
             alt=""
           />
         </ProfilePic>
-        <UserName>zzzhaehae</UserName>
+        <UserName>{userInfo?.nickname}</UserName>
       </User>
     </Info>
   );
