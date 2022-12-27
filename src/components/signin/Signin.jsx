@@ -1,13 +1,11 @@
-// view 구현을 위해 만든 임시 페이지입니다.
-// 로그인 기능 완료 시 Home에 token 값 유무에 따라 로그인 또는 메인 페이지를 보여주도록 합칠 예정입니다.
-import "../components/signin/signin.css";
+import "./style/signin.css";
 import React, { useState } from "react";
-import useInput from "../hooks/useInput";
+import useInput from "../../hooks/useInput";
 import styled from "styled-components";
-import Input from "../components/common/Input";
-import Button from "../components/common/Button";
-import SliderContainer from "../components/signin/SliderContainer";
-import axios from "../../node_modules/axios/index";
+import Input from "../common/Input";
+import Button from "../common/Button";
+import SliderContainer from "./SliderContainer";
+import axios from "../../../node_modules/axios/index";
 
 const Signin = () => {
   const [email, , inputEmail] = useInput("");
@@ -15,6 +13,8 @@ const Signin = () => {
   const [password, , inputPassword] = useInput("");
 
   const [showStatusToggle, setShowStatusToggle] = useState(false);
+
+  const [errorMessage, setErrorMessage] = useState("");
 
   const showPassword = {
     type: "password",
@@ -41,6 +41,9 @@ const Signin = () => {
 
   const [buttonDisableToggle, setButtonDisableToggle] = useState(true);
 
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+
   const onBlurEmail = () => {
     if (password && email) {
       axios
@@ -54,8 +57,19 @@ const Signin = () => {
           localStorage.setItem("accessToken", accesstoken);
           localStorage.setItem("refreshToken", refreshtoken);
           localStorage.setItem("userId", userId);
+          setErrorMessage("");
+          setLoginEmail(email);
+          setLoginPassword(password);
         })
-        .catch((e) => console.log(e));
+        .catch((error) => {
+          if (error.response.status === 412) {
+            setErrorMessage("잘못된 정보입니다. 다시 확인하세요.");
+            localStorage.clear();
+          } else {
+            setErrorMessage("로그인에 실패하였습니다. 다시 시도해주세요.");
+            localStorage.clear();
+          }
+        });
       setButtonDisableToggle(false);
     } else {
       setButtonDisableToggle(true);
@@ -75,16 +89,37 @@ const Signin = () => {
           localStorage.setItem("accessToken", accesstoken);
           localStorage.setItem("refreshToken", refreshtoken);
           localStorage.setItem("userId", userId);
+          setErrorMessage("");
+          setLoginEmail(email);
+          setLoginPassword(password);
         })
-        .catch((e) => console.log(e));
+        .catch((error) => {
+          if (error.response.status === 412) {
+            setErrorMessage("잘못된 정보입니다. 다시 확인하세요.");
+            localStorage.clear();
+          } else {
+            setErrorMessage("로그인에 실패하였습니다. 다시 시도해주세요.");
+            localStorage.clear();
+          }
+        });
       setButtonDisableToggle(false);
     } else {
       setButtonDisableToggle(true);
     }
   };
 
+  const signIn = () => {
+    if (loginEmail === email && loginPassword === password) {
+      const userId = localStorage.getItem("userId");
+      userId && window.location.reload();
+    } else {
+      localStorage.clear();
+      setErrorMessage("잘못된 정보입니다. 다시 확인하세요.");
+    }
+  };
+
   return (
-    <WrapAll>
+    <WrapAll error={errorMessage}>
       <Wrap>
         <SliderContainer />
         <WrapContentBox>
@@ -123,6 +158,7 @@ const Signin = () => {
                 )}
               </div>
               <Button
+                onClick={signIn}
                 className="signin-button"
                 margin="10px 40px 10px"
                 padding="6px 16px"
@@ -134,6 +170,7 @@ const Signin = () => {
                 로그인
               </Button>
             </SigninBox>
+            <ErrorMessage error={errorMessage}>{errorMessage}</ErrorMessage>
           </ContentBox>
           <ContentBox>
             <Login>
@@ -150,7 +187,7 @@ export default Signin;
 
 const WrapAll = styled.div`
   background-color: rgb(250, 250, 250);
-  padding: 58px 0px;
+  padding: ${(props) => (!props.error ? "63px 0px" : "51px 0px")};
   display: flex;
   flex-direction: column;
 `;
@@ -209,6 +246,13 @@ const PasswordShowStatus = styled.p`
   font-size: 14px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
+`;
+
+const ErrorMessage = styled.p`
+  color: rgb(237, 73, 86);
+  font-size: 14px;
+  margin-top: ${(props) => (props.error ? "10px" : "0px")};
+  margin-bottom: ${(props) => (props.error ? "30px" : "0px")};
 `;
 
 const Login = styled.p`

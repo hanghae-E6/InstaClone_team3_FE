@@ -4,12 +4,14 @@ import { useNavigate } from "../../node_modules/react-router-dom/dist/index";
 import { SIGNUP_VALIDATION } from "../constants/validation";
 
 import axios from "../../node_modules/axios/index";
-import "../components/signup/signup.css";
+import "../components/signup/style/signup.css";
 import styled from "styled-components";
 import Input from "../components/common/Input";
 import Button from "../components/common/Button";
 
 const Signup = () => {
+  const loginStatus = localStorage.getItem("refreshToken");
+
   const navigate = useNavigate();
   const [email, isEmailValid, inputEmail] = useInput(
     "",
@@ -97,7 +99,7 @@ const Signup = () => {
             setNicknameMessage(SIGNUP_VALIDATION.MESSAGE.SUCCESS);
           setNicknameDuplicateCheck(true);
         })
-        .catch((e) => {
+        .catch(() => {
           setNicknameMessage(SIGNUP_VALIDATION.MESSAGE.WARNING);
           setNicknameDuplicateCheck(false);
         });
@@ -142,118 +144,120 @@ const Signup = () => {
           password,
           profileImg: null,
         })
-        .then((res) => res.status === 201 && navigate("/signin"))
-        .catch((e) => alert(e));
+        .then((res) => res.status === 201 && navigate("/"))
+        .catch(() => alert("회원가입에 실패했습니다."));
       return;
     }
   };
 
   return (
-    <WrapAll>
-      <Wrap>
-        <WrapContentBox>
-          <ContentBox>
-            <Logo>Instar⭐gram</Logo>
-            <SignupBox>
-              <Intro>친구들의 사진과 동영상을 보려면 가입하세요.</Intro>
-              <div className="signup-input-box">
-                <Input
-                  className="signup-input"
-                  placeholder="이메일 주소"
-                  value={email}
-                  onChange={inputEmail}
-                  onBlur={onBlurEmail}
-                  style={{
-                    margin: "0 40px 10px",
-                  }}
-                />
-                <label>이메일 주소</label>
-                <span className="message">{emailMessage}</span>
-              </div>
-              <div className="signup-input-box">
-                <Input
-                  className="signup-input"
-                  placeholder="사용자 이름"
-                  value={nickname}
-                  onChange={inputNickname}
-                  onBlur={onBlurNickname}
-                  style={{ margin: "0 40px 10px" }}
-                />
-                <label>사용자 이름</label>
-                {email && !nicknameMessage ? (
-                  <RandomNickname onClick={onClickRandomString}>
-                    {SIGNUP_VALIDATION.MESSAGE.DEFAULT}
-                  </RandomNickname>
-                ) : (
-                  <>
-                    <span
-                      className="message"
-                      style={{
-                        marginLeft: "-99px",
-                      }}
-                    >
-                      {nicknameMessage}
-                    </span>
-                    {nicknameMessage && (
-                      <RandomNickname onClick={onClickRandomString}>
-                        {SIGNUP_VALIDATION.MESSAGE.DEFAULT}
-                      </RandomNickname>
-                    )}
-                  </>
-                )}
-              </div>
-              <div className="signup-input-box">
-                <Input
-                  className="signup-input"
-                  type={passwordShowStatus.type}
-                  placeholder="비밀번호"
-                  value={password}
-                  onChange={inputPassword}
-                  onBlur={onBlurPassword}
-                  style={{ margin: "0 40px 10px" }}
-                />
-                <label>비밀번호</label>
-                <span
-                  className="message"
-                  style={{
-                    marginLeft: !password
-                      ? "-71px"
-                      : passwordShowStatus.validationMargin,
-                  }}
-                >
-                  {passwordMessage}
-                </span>
-                {password && (
-                  <PasswordShowStatus
-                    onClick={togglePW}
-                    marginLeft={passwordShowStatus.textMargin}
+    !loginStatus && (
+      <WrapAll>
+        <Wrap>
+          <WrapContentBox>
+            <ContentBox>
+              <Logo>Instar⭐gram</Logo>
+              <SignupBox>
+                <Intro>친구들의 사진과 동영상을 보려면 가입하세요.</Intro>
+                <div className="signup-input-box">
+                  <Input
+                    className="signup-input"
+                    placeholder="이메일 주소"
+                    value={email}
+                    onChange={inputEmail}
+                    onBlur={onBlurEmail}
+                    style={{
+                      margin: "0 40px 10px",
+                    }}
+                  />
+                  <label>이메일 주소</label>
+                  <span className="message">{emailMessage}</span>
+                </div>
+                <div className="signup-input-box">
+                  <Input
+                    className="signup-input"
+                    placeholder="사용자 이름"
+                    value={nickname}
+                    onChange={inputNickname}
+                    onBlur={onBlurNickname}
+                    style={{ margin: "0 40px 10px" }}
+                  />
+                  <label>사용자 이름</label>
+                  {email && !nicknameMessage ? (
+                    <RandomNickname onClick={onClickRandomString}>
+                      {SIGNUP_VALIDATION.MESSAGE.DEFAULT}
+                    </RandomNickname>
+                  ) : (
+                    <>
+                      <span
+                        className="message"
+                        style={{
+                          marginLeft: "-99px",
+                        }}
+                      >
+                        {nicknameMessage}
+                      </span>
+                      {nicknameMessage && (
+                        <RandomNickname onClick={onClickRandomString}>
+                          {SIGNUP_VALIDATION.MESSAGE.DEFAULT}
+                        </RandomNickname>
+                      )}
+                    </>
+                  )}
+                </div>
+                <div className="signup-input-box">
+                  <Input
+                    className="signup-input"
+                    type={passwordShowStatus.type}
+                    placeholder="비밀번호"
+                    value={password}
+                    onChange={inputPassword}
+                    onBlur={onBlurPassword}
+                    style={{ margin: "0 40px 10px" }}
+                  />
+                  <label>비밀번호</label>
+                  <span
+                    className="message"
+                    style={{
+                      marginLeft: !password
+                        ? "-71px"
+                        : passwordShowStatus.validationMargin,
+                    }}
                   >
-                    {passwordShowStatus.text}
-                  </PasswordShowStatus>
-                )}
-              </div>
-              <Button
-                className="signup-button"
-                type="button"
-                onClick={postUserInfo}
-                margin="20px 40px 10px"
-                padding="6px 16px"
-                fontSize="initial"
-                borderRadius="7px"
-                disabled={buttonDisableToggle}
-              >
-                가입
-              </Button>
-            </SignupBox>
-          </ContentBox>
-          <ContentBox>
-            <Login>
-              계정이 있으신가요? <LoginLink href="/">로그인</LoginLink>
-            </Login>
-          </ContentBox>
-        </WrapContentBox>
-      </Wrap>
-    </WrapAll>
+                    {passwordMessage}
+                  </span>
+                  {password && (
+                    <PasswordShowStatus
+                      onClick={togglePW}
+                      marginLeft={passwordShowStatus.textMargin}
+                    >
+                      {passwordShowStatus.text}
+                    </PasswordShowStatus>
+                  )}
+                </div>
+                <Button
+                  className="signup-button"
+                  type="button"
+                  onClick={postUserInfo}
+                  margin="20px 40px 10px"
+                  padding="6px 16px"
+                  fontSize="initial"
+                  borderRadius="7px"
+                  disabled={buttonDisableToggle}
+                >
+                  가입
+                </Button>
+              </SignupBox>
+            </ContentBox>
+            <ContentBox>
+              <Login>
+                계정이 있으신가요? <LoginLink href="/">로그인</LoginLink>
+              </Login>
+            </ContentBox>
+          </WrapContentBox>
+        </Wrap>
+      </WrapAll>
+    )
   );
 };
 
@@ -274,8 +278,8 @@ const Wrap = styled.div`
 const WrapContentBox = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 5.3%;
-  margin-bottom: 5.3%;
+  margin-top: 7%;
+  margin-bottom: 7%;
   max-width: 350px;
 `;
 
