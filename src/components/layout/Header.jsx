@@ -41,7 +41,7 @@ const Header = () => {
 const HeaderWrapper = styled.div`
   position: fixed;
   top: 0;
-  width: 224px;
+  width: 336px;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -55,7 +55,7 @@ const HeaderWrapper = styled.div`
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   border-right: 1px solid ${Colors.grey};
-  padding: 45px 20px 12px 20px;
+  padding: 45px 20px 12px 28px;
   color: rgb(38, 38, 38);
   h1 {
     font-size: 25px;
