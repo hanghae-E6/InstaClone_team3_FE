@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
 import UserBox from "../postElements/UserBox";
 import Image from "../postElements/Image";
@@ -255,4 +255,4 @@ const ReactionWrapper = styled.div`
 //   height: 700px;
 //   border-radius: 10px;
 // `;
-export default PostCard;
+export default memo(PostCard);
