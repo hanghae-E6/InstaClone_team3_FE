@@ -13,3 +13,17 @@ export const __getPosts = createAsyncThunk(
     }
   }
 );
+
+// 게시글 페이지네이션 조회
+export const __getPostsByPageno = createAsyncThunk(
+  "getPostsByPageno",
+  async (payload, thunkAPI) => {
+    const pageno = payload;
+    try {
+      const response = await api.get(`/api/posts/page?pageno=${pageno}`);
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
