@@ -2,13 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import CommentItem from "./CommentItem";
 
-const CommentList = ({ comments }) => {
+const CommentList = ({ comments, postId }) => {
   return (
     <CommentListWrapper>
       <CommentListBox>
         {comments &&
           comments.map((comment) => (
-            <CommentItem key={comment.commentId} commentInfo={comment} />
+            <CommentItem
+              key={comment.commentId}
+              commentInfo={comment}
+              postId={postId}
+            />
           ))}
       </CommentListBox>
     </CommentListWrapper>
