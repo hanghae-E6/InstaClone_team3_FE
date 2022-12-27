@@ -22,7 +22,7 @@ function IconBox() {
       <img
         src={CommentLogo}
         style={{ width: "23px", marginLeft: "10px" }}
-        class="icon"
+        className="icon"
         alt="comment"
         onClick={showPopup}
       />
@@ -32,10 +32,10 @@ function IconBox() {
       <img
         src={DmLogo}
         style={{ width: "22px", marginLeft: "10px" }}
-        class="icon"
+        className="icon"
         alt=""
       />
-      <img src="img/save.PNG" class="save icon" alt="" />
+      <img src="img/save.PNG" className="save icon" alt="" />
     </ReactionWrapper>
   );
 }

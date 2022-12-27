@@ -8,12 +8,31 @@ import CommentLogo from "../../assets/comment.png";
 import DmLogo from "../../assets/dm.png";
 import { AiOutlineHeart } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import useInputs from "../../hooks/useInputs";
+import { useDispatch } from "react-redux";
+import { __addComment } from "../../lib/commentApi";
+
+function PostCard({ post }) {
+  const dispatch = useDispatch();
+  const [comment, setComment, commentHandler] = useInputs("");
+
+  // 댓글 등록
+  const onAddComment = () => {
+    // 7 => 테스트로 하드코딩함. To-Do: postId로 변경 필요
+    dispatch(__addComment({ postId: 7, comment })).then((res) => {
+      console.log(res);
+      setComment("");
+    });
+  };
+
+
 function PostCard() {
   const navigate = useNavigate();
 
   const onDetailPage = () => {
     navigate("/posts");
   };
+
   return (
     <Wrapper>
       <Post>
@@ -51,9 +70,16 @@ function PostCard() {
           <PostTime>2분 전</PostTime>
         </PostContent>
         <CommentWrapper>
-          <img src="img/smile.PNG" class="icon" alt="" />
-          <CommentBox type="text" placeholder="Add a comment" />
-          <button class="comment-btn">post</button>
+          <img src="img/smile.PNG" className="icon" alt="" />
+          <CommentBox
+            type="text"
+            placeholder="Add a comment"
+            value={comment}
+            onChange={commentHandler}
+          />
+          <button className="comment-btn" onClick={onAddComment}>
+            게시
+          </button>
         </CommentWrapper>
       </Post>
     </Wrapper>
