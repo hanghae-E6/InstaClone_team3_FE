@@ -1,7 +1,26 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-// import api from "./api";
+import api from "./api";
 
-// 댓글 번역하기
+// 댓글 등록
+export const __addComment = createAsyncThunk(
+  "addComment",
+  async (payload, thunkAPI) => {
+    const { postId, comment } = payload;
+    try {
+      const response = await api.post(`api/posts/${postId}/comments`, {
+        comment,
+      });
+      console.log(response);
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+      const { errorMessage } = error.response.data;
+      alert(errorMessage);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+// 댓글 번역
 export const __getTranslatedText = createAsyncThunk(
   "getTranslatedText",
   async (payload, thunkAPI) => {

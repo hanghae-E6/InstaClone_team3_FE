@@ -5,8 +5,23 @@ import IconBox from "../postElements/IconBox";
 import Image from "../postElements/Image";
 import CountLike from "../postElements/CountLike";
 import Content from "../postElements/Content";
+import useInputs from "../../hooks/useInputs";
+import { useDispatch } from "react-redux";
+import { __addComment } from "../../lib/commentApi";
 
-function PostCard() {
+function PostCard({ post }) {
+  const dispatch = useDispatch();
+  const [comment, setComment, commentHandler] = useInputs("");
+
+  // 댓글 등록
+  const onAddComment = () => {
+    // 7 => 테스트로 하드코딩함. To-Do: postId로 변경 필요
+    dispatch(__addComment({ postId: 7, comment })).then((res) => {
+      console.log(res);
+      setComment("");
+    });
+  };
+
   return (
     <Wrapper>
       <Post>
@@ -44,9 +59,16 @@ function PostCard() {
           <PostTime>2분 전</PostTime>
         </PostContent>
         <CommentWrapper>
-          <img src="img/smile.PNG" class="icon" alt="" />
-          <CommentBox type="text" placeholder="Add a comment" />
-          <button class="comment-btn">post</button>
+          <img src="img/smile.PNG" className="icon" alt="" />
+          <CommentBox
+            type="text"
+            placeholder="Add a comment"
+            value={comment}
+            onChange={commentHandler}
+          />
+          <button className="comment-btn" onClick={onAddComment}>
+            게시
+          </button>
         </CommentWrapper>
       </Post>
     </Wrapper>
