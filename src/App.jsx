@@ -5,6 +5,7 @@ import Signup from "./routes/Signup";
 import DetailPost from "./components/post/DetailPost";
 import Mypage from "./routes/Mypage";
 import AddPost from "./components/post/AddPost";
+import ModifyPost from "./components/post/ModifyPost";
 import MypageEdit from "./routes/MypageEdit";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route exact path="/mypage/:userId" element={<Mypage />} />
         <Route exact path="/mypage/:userId/edit" element={<MypageEdit />} />
         <Route exact path="/write" element={<AddPost />} />
+        <Route exact path="/write/:postId" element={<ModifyPost />} />
       </Routes>
     </Router>
   );
