@@ -14,7 +14,7 @@ const Signin = () => {
 
   const [showStatusToggle, setShowStatusToggle] = useState(false);
 
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const showPassword = {
     type: "password",
@@ -41,35 +41,8 @@ const Signin = () => {
 
   const [buttonDisableToggle, setButtonDisableToggle] = useState(true);
 
-  const [loginEmail, setLoginEmail] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
-
   const onBlurEmail = () => {
     if (password && email) {
-      axios
-        .post(process.env.REACT_APP_API_ENDPOINT + "/api/user/login", {
-          email,
-          password,
-        })
-        .then((res) => {
-          const { accesstoken, refreshtoken } = res.headers;
-          const { userId } = res.data;
-          localStorage.setItem("accessToken", accesstoken);
-          localStorage.setItem("refreshToken", refreshtoken);
-          localStorage.setItem("userId", userId);
-          setErrorMessage("");
-          setLoginEmail(email);
-          setLoginPassword(password);
-        })
-        .catch((error) => {
-          if (error.response.status === 412) {
-            setErrorMessage("잘못된 정보입니다. 다시 확인하세요.");
-            localStorage.clear();
-          } else {
-            setErrorMessage("로그인에 실패하였습니다. 다시 시도해주세요.");
-            localStorage.clear();
-          }
-        });
       setButtonDisableToggle(false);
     } else {
       setButtonDisableToggle(true);
@@ -78,44 +51,36 @@ const Signin = () => {
 
   const onBlurPassword = () => {
     if (email && password) {
-      axios
-        .post(process.env.REACT_APP_API_ENDPOINT + "/api/user/login", {
-          email,
-          password,
-        })
-        .then((res) => {
-          const { accesstoken, refreshtoken } = res.headers;
-          const { userId } = res.data;
-          localStorage.setItem("accessToken", accesstoken);
-          localStorage.setItem("refreshToken", refreshtoken);
-          localStorage.setItem("userId", userId);
-          setErrorMessage("");
-          setLoginEmail(email);
-          setLoginPassword(password);
-        })
-        .catch((error) => {
-          if (error.response.status === 412) {
-            setErrorMessage("잘못된 정보입니다. 다시 확인하세요.");
-            localStorage.clear();
-          } else {
-            setErrorMessage("로그인에 실패하였습니다. 다시 시도해주세요.");
-            localStorage.clear();
-          }
-        });
       setButtonDisableToggle(false);
     } else {
       setButtonDisableToggle(true);
     }
   };
 
-  const signIn = () => {
-    if (loginEmail === email && loginPassword === password) {
-      const userId = localStorage.getItem("userId");
-      userId && window.location.reload();
-    } else {
-      localStorage.clear();
-      setErrorMessage("잘못된 정보입니다. 다시 확인하세요.");
-    }
+  const signIn = (e) => {
+    e.preventDefault();
+    axios
+      .post(process.env.REACT_APP_API_ENDPOINT + "/api/user/login", {
+        email,
+        password,
+      })
+      .then((res) => {
+        const { accesstoken, refreshtoken } = res.headers;
+        const { userId } = res.data;
+        localStorage.setItem("accessToken", accesstoken);
+        localStorage.setItem("refreshToken", refreshtoken);
+        localStorage.setItem("userId", userId);
+        window.location.reload();
+      })
+      .catch((error) => {
+        if (error.response.status === 412) {
+          setErrorMessage("잘못된 정보입니다. 다시 확인하세요.");
+          localStorage.clear();
+        } else {
+          setErrorMessage("로그인에 실패하였습니다. 다시 시도해주세요.");
+          localStorage.clear();
+        }
+      });
   };
 
   return (
@@ -125,7 +90,7 @@ const Signin = () => {
         <WrapContentBox>
           <ContentBox>
             <Logo>Instar⭐gram</Logo>
-            <SigninBox>
+            <SigninForm onSubmit={signIn}>
               <div className="signin-input-box">
                 <Input
                   className="signin-input"
@@ -158,7 +123,6 @@ const Signin = () => {
                 )}
               </div>
               <Button
-                onClick={signIn}
                 className="signin-button"
                 margin="10px 40px 10px"
                 padding="6px 16px"
@@ -169,7 +133,7 @@ const Signin = () => {
               >
                 로그인
               </Button>
-            </SigninBox>
+            </SigninForm>
             <ErrorMessage error={errorMessage}>{errorMessage}</ErrorMessage>
           </ContentBox>
           <ContentBox>
@@ -227,7 +191,7 @@ const ContentBox = styled.div`
   padding: 10px 0;
 `;
 
-const SigninBox = styled.div`
+const SigninForm = styled.form`
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
