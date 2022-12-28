@@ -18,6 +18,24 @@ export const __getPosts = createAsyncThunk(
   }
 );
 
+// 특정 유저 게시글 조회
+export const __getPostsByUserId = createAsyncThunk(
+  "getPostsByUserId",
+  async (payload, thunkAPI) => {
+    try {
+      const userId = payload;
+      const response = await api.get(`/api/posts/user/${userId}`);
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+      const { status, data } = error.response;
+      if (status === 404) {
+        alert(data.errorMessage);
+      }
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 // 게시글 페이지네이션 조회
 export const __getPostsByPageno = createAsyncThunk(
   "getPostsByPageno",
@@ -71,19 +89,3 @@ export const __togglePostLikes = createAsyncThunk(
     }
   }
 );
-
-// export const __addPosts = createAsyncThunk(
-//   "addPosts",
-//   async (payload, thunkAPI) => {
-//     try {
-//       const response = await api.get(`/api/posts`);
-//       return thunkAPI.fulfillWithValue(response.data);
-//     } catch (error) {
-//       const { status, data } = error.response;
-//       if (status === 404) {
-//         alert(data.errorMessage);
-//       }
-//       return thunkAPI.rejectWithValue(error);
-//     }
-//   }
-// );
