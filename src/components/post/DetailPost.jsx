@@ -121,7 +121,7 @@ const BackGround = styled.div`
 const Wrapper = styled.div`
   background-color: white;
   display: flex;
-  width: 800px;
+  width: 980px;
   height: 850px;
   border-radius: 10px;
 `;

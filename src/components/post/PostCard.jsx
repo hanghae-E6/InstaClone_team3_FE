@@ -235,6 +235,10 @@ const ReactionWrapper = styled.div`
   height: 50px;
   display: flex;
   align-items: center;
+  img,
+  svg {
+    cursor: pointer;
+  }
 `;
 
 //   .reaction-wrapper .icon {
