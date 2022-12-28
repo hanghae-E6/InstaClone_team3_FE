@@ -1,21 +1,14 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import styled from "styled-components";
-// import Button from "../common/Button";
 import UserBox from "../postElements/UserBox";
-// import { __addPost } from "../../lib/postApi";
 import { CgClose } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
-import ImgUpload from "../../assets/imgupload.png";
 import AWS from "aws-sdk";
-// import { __addPosts } from "../../apis/postApi";
-import axios from "../../../node_modules/axios/index";
 import { imageApi } from "../../apis/api";
 
 function AddPost() {
   const userId = localStorage.getItem("userId"); // 로그인한 사용자의 userId
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const albumBucketName = "imagebucketforcloneinsta";
   const [content, setContent] = useState("");
@@ -31,10 +24,15 @@ function AddPost() {
 
   const handleFileInput = (e) => {
     const file = e.target.files[0];
-    setPrevImg(
-      `https://imagebucketforcloneinsta.s3.ap-northeast-2.amazonaws.com/${file.name}`
-    );
-    setPostImg(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setPrevImg(reader.result);
+      };
+      setPostImg(file);
+    }
+
     // S3 SDK에 내장된 업로드 함수
     const upload = new AWS.S3.ManagedUpload({
       params: {
@@ -48,7 +46,7 @@ function AddPost() {
     const promise = upload.promise();
 
     promise.then(
-      function (data) {
+      function () {
         alert("이미지 업로드에 성공했습니다.");
       },
       function (err) {
@@ -63,14 +61,19 @@ function AddPost() {
 
   const HandleSubmitPost = async (e) => {
     e.preventDefault();
-    // dispatch(__addPosts({ postImg, content }));
+
     const formData = new FormData();
     formData.append("postImg", postImg);
     formData.append("content", content);
 
     try {
-      const res = await imageApi.post("/api/posts", formData);
-      console.log(res);
+      await imageApi.post("/api/posts", formData).then((res) => {
+        const { status, data } = res;
+        if (status === 201) {
+          alert(`${data.message}`);
+          navigate("/");
+        }
+      });
     } catch (e) {
       alert(e.response.data.errorMessage);
     }
@@ -99,15 +102,23 @@ function AddPost() {
         </TopWrapper>
         <ContentsWrapper>
           <ImageUpload>
-            {postImg ? (
-              <Img src={prevImg} alt="게시물 사진" />
-            ) : (
-              <div>
-                <Img src={ImgUpload} alt="" style={{ marginBottom: "10px" }} />
-                <div size="20px">사진과 동영상을 여기에 끌어다 놓으세요</div>
-                <input type="file" onChange={handleFileInput}></input>
-              </div>
-            )}
+            <ImagePreviewBox>
+              {prevImg ? (
+                <img
+                  id="preview"
+                  alt="미리보기"
+                  src={prevImg || ""}
+                  width="100px"
+                />
+              ) : (
+                ""
+              )}
+            </ImagePreviewBox>
+            <div>
+              <Img src={postImg} alt="" style={{ marginBottom: "10px" }} />
+              <div size="20px">사진과 동영상을 여기에 끌어다 놓으세요</div>
+              <input type="file" onChange={handleFileInput}></input>
+            </div>
           </ImageUpload>
           <ContentUpload>
             <UserBox userInfo={{ userId }} />
@@ -186,11 +197,15 @@ const ContentUpload = styled.div`
 
 const TextArea = styled.textarea`
   border: none;
-  width: 95%;
-  height: 85%;
+  height: 340px;
+  width: 265px;
   &:focus {
     outline: none;
   }
+`;
+
+const ImagePreviewBox = styled.div`
+  margin: 10px;
 `;
 
 export default AddPost;
