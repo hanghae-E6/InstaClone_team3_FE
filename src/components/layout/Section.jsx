@@ -13,13 +13,15 @@ const DefaultSection = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  margin-left: 336px;
-  width: 68%;
+  margin-left: 224px;
+  min-width: 935px;
   min-height: 100vh;
+  padding: calc(4vh) 20px 0;
   box-sizing: content-box;
   justify-content: center;
   align-items: center;
   padding: 40px 20px;
+  background-color: #fafafa;
 `;
 
 export default Section;

@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import UserBox from "../postElements/UserBox";
 import Image from "../postElements/Image";
@@ -20,10 +20,6 @@ function PostCard({ post }) {
 
   // 댓글 등록
   const onAddComment = () => {
-    if (comment === "") {
-      alert("댓글을 입력해주세요.");
-      return;
-    }
     dispatch(__addComment({ postId, comment })).then((res) => {
       const { type } = res;
 
@@ -259,4 +255,4 @@ const ReactionWrapper = styled.div`
 //   height: 700px;
 //   border-radius: 10px;
 // `;
-export default memo(PostCard);
+export default PostCard;

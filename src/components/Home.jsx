@@ -75,7 +75,7 @@ const Home = () => {
   return posts ? (
     <Template>
       {posts.map((post) => (
-        <PostCard key={`${post.postId}${post.createdAt}`} post={post} />
+        <PostCard key={post.postId} post={post} />
       ))}
       {posts.length !== 0 ? (
         <div ref={setTarget} className="Target-Element">

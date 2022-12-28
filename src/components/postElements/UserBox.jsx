@@ -1,29 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
-// import ProfileImg from "../../assets/ProfileImg.png";
-import useSetUser from "../../hooks/useSetUser";
+import ProfileImg from "../../assets/ProfileImg.png";
 
 function UserBox({ userInfo }) {
-  const user = useSetUser(userInfo?.userId); // 사용자 정보 조회
-
-  return user ? (
+  return (
     <Info>
       <User>
-        <Link to={`/mypage/${user?.userId}`}>
-          <ProfilePic>
-            <img
-              src={user.profileImg}
-              style={{ width: "40px", margin: "0px 5px" }}
-              alt=""
-            />
-          </ProfilePic>
-        </Link>
+        <ProfilePic>
+          <img
+            src={ProfileImg}
+            style={{ width: "40px", margin: "0px 5px" }}
+            alt=""
+          />
+        </ProfilePic>
         <UserName>{userInfo?.nickname}</UserName>
       </User>
     </Info>
-  ) : (
-    ""
   );
 }
 
@@ -42,13 +34,10 @@ const User = styled.div`
 `;
 
 const ProfilePic = styled.div`
-  width: 40px;
   height: 40px;
+  width: 40px;
   padding: 0;
   background: none;
-  img {
-    border-radius: 50px;
-  }
 `;
 
 const UserName = styled.p`
