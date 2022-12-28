@@ -1,4 +1,3 @@
-import Button from "./Button";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
 import useClickAway from "../../hooks/useClickAway";
@@ -28,19 +27,7 @@ const Modal = ({ visible, title, width, children, onSubmit, onClose }) => {
               }}
             />
             <ModalBox ref={ref} width={width}>
-              {/* <h3 style={{ textAlign: "center" }}>{title}</h3> */}
               <div>{children}</div>
-              {/* <ButtonsBox>
-                {onSubmit && <Button onClick={onSubmit}>제출하기</Button>}
-                <Button
-                  btnTheme="secondary"
-                  onClick={onClose}
-                  width="100px"
-                  height="30px"
-                >
-                  뒤로가기
-                </Button>
-              </ButtonsBox> */}
             </ModalBox>
           </Background>,
           portalDiv
