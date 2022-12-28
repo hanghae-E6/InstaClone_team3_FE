@@ -10,7 +10,7 @@ import ImgUpload from "../../assets/imgupload.png";
 import AWS from "aws-sdk";
 // import { __addPosts } from "../../apis/postApi";
 import axios from "../../../node_modules/axios/index";
-import imageApi from "../../apis/api";
+import { imageApi } from "../../apis/api";
 
 function AddPost() {
   const navigate = useNavigate();
