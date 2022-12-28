@@ -7,8 +7,11 @@ import {
   MdAccountCircle,
 } from "react-icons/md";
 import { Link } from "react-router-dom";
+import useSetUser from "../../hooks/useSetUser";
 
 const Header = () => {
+  const user = useSetUser(); // 사용자 정보 조회
+
   return (
     <HeaderWrapper>
       <h1>Instar⭐gram</h1>
@@ -25,7 +28,7 @@ const Header = () => {
           </Link>
         </li>
         <li>
-          <Link>
+          <Link to={`/mypage/${user?.userId}`}>
             <MdAccountCircle />
             프로필
           </Link>
