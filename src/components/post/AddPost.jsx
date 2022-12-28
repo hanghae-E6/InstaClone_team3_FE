@@ -13,6 +13,7 @@ import axios from "../../../node_modules/axios/index";
 import { imageApi } from "../../apis/api";
 
 function AddPost() {
+  const userId = localStorage.getItem("userId"); // 로그인한 사용자의 userId
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -109,7 +110,7 @@ function AddPost() {
             )}
           </ImageUpload>
           <ContentUpload>
-            <UserBox />
+            <UserBox userInfo={{ userId }} />
             <TextArea placeholder="문구 입력..." onChange={HandleTextChange} />
           </ContentUpload>
         </ContentsWrapper>

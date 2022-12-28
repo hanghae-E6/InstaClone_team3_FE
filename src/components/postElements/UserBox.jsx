@@ -19,7 +19,7 @@ function UserBox({ userInfo }) {
             />
           </ProfilePic>
         </Link>
-        <UserName>{userInfo?.nickname}</UserName>
+        <UserName>{user?.nickname}</UserName>
       </User>
     </Info>
   ) : (
