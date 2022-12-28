@@ -29,7 +29,7 @@ const Mypage = () => {
 
   const showPopup = (followFlag) => {
     setFlag(true);
-    setFollowFlag(followFlag);
+    setFollowFlag(followFlag); // 팔로운지 팔로잉인지 구분하기 위함
   };
 
   const closePopup = () => {
@@ -118,7 +118,10 @@ const Mypage = () => {
                 게시물
                 <Count>{userPosts.length}</Count>
               </div>
-              <div onClick={() => showPopup("follower")}>
+              <div
+                onClick={() => showPopup("follower")}
+                style={{ cursor: "pointer" }}
+              >
                 팔로워
                 <span
                   style={{
@@ -129,7 +132,10 @@ const Mypage = () => {
                   {followerList.length}
                 </span>
               </div>
-              <div onClick={() => showPopup("following")}>
+              <div
+                onClick={() => showPopup("following")}
+                style={{ cursor: "pointer" }}
+              >
                 팔로우
                 <span
                   style={{
