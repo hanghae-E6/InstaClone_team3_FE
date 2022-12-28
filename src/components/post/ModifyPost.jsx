@@ -128,8 +128,6 @@ function ModifyPost() {
               )}
             </ImagePreviewBox>
             <div>
-              {/* <Img src={newImg} alt="" style={{ marginBottom: "10px" }} /> */}
-              <div size="20px">사진과 동영상을 여기에 끌어다 놓으세요</div>
               <input type="file" onChange={handleFileModify}></input>
             </div>
           </ImageUpload>
@@ -200,11 +198,6 @@ const ImageUpload = styled.div`
   justify-content: center;
   align-items: center;
   border-right: 1px solid #bcbcbc;
-`;
-
-const Img = styled.img`
-  max-width: 400px;
-  max-height: 400px;
 `;
 
 const ContentUpload = styled.div`
