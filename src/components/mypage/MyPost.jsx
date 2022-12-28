@@ -26,10 +26,10 @@ const MyPost = ({ post }) => {
         onClick={() => navigate(`/posts/${post.postId}`)}
       ></HoverEffect>
       <HoverIcons className="hover-icons">
-        <BsFillHeartFill size={25} style={{ marginRight: "7px" }} />
+        <BsFillHeartFill size={20} style={{ marginRight: "7px" }} />
         {likes}
         <BsFillChatFill
-          size={25}
+          size={20}
           style={{
             transform: "scaleX(-1)",
             marginRight: "7px",
@@ -64,7 +64,7 @@ const HoverEffect = styled.div`
 const HoverIcons = styled.div`
   width: fit-content;
   color: white;
-  font-size: 25px;
+  font-size: 20px;
   opacity: 0;
   position: absolute;
 `;
