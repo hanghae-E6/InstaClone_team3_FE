@@ -6,13 +6,10 @@ import useSetUser from "../hooks/useSetUser";
 import { loginCheck } from "../apis/api";
 import api from "../apis/api";
 import { __getPostsByUserId } from "../apis/postApi";
-import { __getFollowList } from "../apis/userApi";
+import { __getFollowList, __toggleFollow } from "../apis/userApi";
 import styled from "styled-components";
 import ProfileTemplate from "../components/layout/ProfileTemplate";
 import Button from "../components/common/Button";
-import { useDispatch } from "react-redux";
-import { __getPostsByUserId } from "../apis/postApi";
-import { __getFollowList, __toggleFollow } from "../apis/userApi";
 import { Colors } from "../styles/colors";
 import "../components/mypage/style/mypage.css";
 import MyPost from "../components/mypage/MyPost";
@@ -56,7 +53,6 @@ const Mypage = () => {
     // 팔로잉/팔로워 목록 조회
     getFollowList();
   }, []);
-
 
   // 프로필편집페이지로 이동
   const goToMypageEdit = () => {
