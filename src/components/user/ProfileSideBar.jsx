@@ -7,7 +7,7 @@ import { Colors } from "../../styles/colors";
 const ProfileSideBar = () => {
   const user = useSetUser(); // 로그인한 사용자 정보 조회
 
-  return user !== null ? (
+  return user ? (
     <ProfileSideBarWrapper>
       <Profile>
         <Link to={`/mypage/${user?.userId}`}>
