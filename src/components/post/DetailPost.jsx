@@ -14,15 +14,32 @@ import useInputs from "../../hooks/useInputs";
 import { __addComment } from "../../apis/commentApi";
 import { loginCheck } from "../../apis/api";
 // import IconBox from "../postElements/IconBox";
+import { MdMoreHoriz } from "react-icons/md";
+import ButtonsModal from "../common/ButtonsModal";
+import api from "../../apis/api";
 
 
 function DetailPost() {
+  const loggedinUserId = localStorage.getItem("userId");
   const params = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [comments, setComments] = useState([]);
   const [post, setPost] = useState({});
   const [comment, setComment, commentHandler] = useInputs("");
+  const [flag, setFlag] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [postId, setPostId] = useState("");
+
+  // 팝업 open
+  const showPopup = () => {
+    setFlag(true);
+  };
+
+  // 팝업 close
+  const closePopup = () => {
+    setFlag(false);
+  };
 
   // 화면 로드 시 게시글상세 조회
   useEffect(() => {
@@ -33,12 +50,25 @@ function DetailPost() {
       if (type === "getPostDetail/fulfilled") {
         setPost(payload.post);
         setComments(payload.comments);
+        setUserId(payload.post.userId);
+        setPostId(String(payload.post.postId));
       } else if (type === "getPostDetail/rejected") {
         alert("알 수 없는 에러입니다.");
         navigate("/");
       }
     });
   }, []);
+
+  //게시글 삭제
+  const HandleDeletePost = async () => {
+    try {
+      await api.delete(`api/posts/${postId}`, { postId: postId });
+      alert("삭제되었습니다");
+      navigate("/");
+    } catch (e) {
+      alert(e);
+    }
+  };
 
   // 댓글 등록
   const onAddComment = () => {
@@ -97,7 +127,28 @@ function DetailPost() {
             <UserBox
               userInfo={{ userId: post?.userId, nickname: post?.nickname }}
             />
+            {loggedinUserId === String(userId) ? (
+              <MdMoreHoriz
+                onClick={showPopup}
+                size={25}
+                style={{
+                  color: "black",
+                  position: "absolute",
+                  right: "2rem",
+                  top: "1rem",
+                  cursor: "pointer",
+                }}
+              />
+            ) : (
+              ""
+            )}
           </StProfile>
+          <ButtonsModal
+            visible={flag}
+            width="400px"
+            children={[{ btnName: "삭제", btnHandler: HandleDeletePost }]}
+            onClose={closePopup}
+          />
           <StContent>
             <Content
               contentInfo={{ nickname: post?.nickname, content: post?.content }}
@@ -158,7 +209,11 @@ const StDetail = styled.div`
 
 const StProfile = styled.div`
   width: 100%;
-  height: 8%;
+  height: 7%;
+  justify-content: space-between;
+  display: flex;
+  position: relative;
+  border-bottom: 1px solid #dfdfdf;
 `;
 
 const StContent = styled.div`
