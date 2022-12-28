@@ -57,7 +57,9 @@ function PostCard({ post }) {
         <UserBox userInfo={{ userId, nickname }} />
         {/* 더보기 옵션 들어갈곳 */}
         {/* </Info> */}
-        <Image src={postImg} />
+        <div onClick={onDetailPage} style={{ cursor: "pointer" }}>
+          <Image src={postImg} />
+        </div>
         <PostContent>
           <ReactionWrapper>
             <AiOutlineHeart size={25} onClick={onTogglePostLikes} />
@@ -92,16 +94,6 @@ function PostCard({ post }) {
         </CommentWrapper>
       </Post>
     </Wrapper>
-    // <Wrapper>
-    //   <div style={{ position: "absolute", top: "0px" }}>
-    //     <UserBox />
-    //   </div>
-    //   <div>{/* <Image></Image> 게시글 이미지 */}</div>
-    //   <div>{/* <Icon></Icon> 좋아요,댓글 아이콘 */}</div>
-    //   <div>{/* <CountLike></CountLike> 좋아요 수 */}</div>
-    //   <div>{/* <Content></Content> 게시글 본문 */}</div>
-    //   <div>{/* <댓글></댓글> 댓글관련 컴포넌트 */}</div>
-    // </Wrapper>
   );
 }
 const Wrapper = styled.div`
