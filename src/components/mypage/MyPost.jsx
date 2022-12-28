@@ -44,8 +44,8 @@ const MyPost = ({ post }) => {
 };
 
 const Post = styled.div`
-  width: 358px;
-  height: 358px;
+  width: 330px;
+  height: 330px;
   position: relative;
   display: flex;
   justify-content: center;
