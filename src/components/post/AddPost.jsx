@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import styled from "styled-components";
 import UserBox from "../postElements/UserBox";
 import { CgClose } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 import AWS from "aws-sdk";
-import { imageApi } from "../../apis/api";
+import { imageApi, loginCheck } from "../../apis/api";
 
 function AddPost() {
+  useLayoutEffect(() => {
+    loginCheck();
+  }, []);
+
   const userId = localStorage.getItem("userId"); // 로그인한 사용자의 userId
   const navigate = useNavigate();
 

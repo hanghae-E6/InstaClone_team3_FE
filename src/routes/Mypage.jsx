@@ -1,43 +1,26 @@
-// <<<<<<< Updated upstream
-// import React from "react";
-// import { useParams } from "react-router-dom";
-// import ProfileTemplate from "../components/layout/ProfileTemplate";
-// import useSetUser from "../hooks/useSetUser";
-
-// const Mypage = () => {
-//   const param = useParams();
-//   const user = useSetUser(param.userId);
-//   console.log(user);
-//   return <ProfileTemplate>Mypage</ProfileTemplate>;
-// =======
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import styled from "styled-components";
+import { useLayoutEffect, useState } from "react";
 import { useNavigate } from "../../node_modules/react-router-dom/dist/index";
-import api from "../apis/api";
+import { useParams } from "react-router-dom";
+import useSetUser from "../hooks/useSetUser";
+import api, { loginCheck } from "../apis/api";
+import styled from "styled-components";
 import ProfileTemplate from "../components/layout/ProfileTemplate";
 import { Colors } from "../styles/colors";
 
 const Mypage = () => {
-  const { userId } = useParams();
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const { userId } = useParams();
+  const user = useSetUser(userId);
   const [userPosts, setUserPosts] = useState(null);
 
-  useEffect(() => {
-    api
-      .get(`/api/user/${userId}`)
-      .then((res) => {
-        setUser(res.data.user);
-      })
-      .catch((e) => console.log(e));
-
+  useLayoutEffect(() => {
+    loginCheck();
     api
       .get(`/api/posts/user/${userId}`)
       .then((res) => {
         setUserPosts(res.data.posts.reverse());
       })
-      .catch((e) => console.log(e));
+      .catch((e) => alert(e));
   }, []);
 
   return (
