@@ -35,28 +35,28 @@ function AddPost() {
         setPrevImg(reader.result);
       };
       setPostImg(file);
+
+      // S3 SDK에 내장된 업로드 함수
+      const upload = new AWS.S3.ManagedUpload({
+        params: {
+          Bucket: albumBucketName, // 업로드할 대상 버킷명
+          Body: file, // 업로드할 파일 객체
+          ContentType: file.type,
+          Key: file.name, // 업로드할 파일명 (* 확장자를 추가해야 합니다!)
+        },
+      });
+
+      const promise = upload.promise();
+
+      promise.then(
+        function () {
+          alert("이미지 업로드에 성공했습니다.");
+        },
+        function (err) {
+          return alert("오류가 발생했습니다: ", err.message);
+        }
+      );
     }
-
-    // S3 SDK에 내장된 업로드 함수
-    const upload = new AWS.S3.ManagedUpload({
-      params: {
-        Bucket: albumBucketName, // 업로드할 대상 버킷명
-        Body: file, // 업로드할 파일 객체
-        ContentType: file.type,
-        Key: file.name, // 업로드할 파일명 (* 확장자를 추가해야 합니다!)
-      },
-    });
-
-    const promise = upload.promise();
-
-    promise.then(
-      function () {
-        alert("이미지 업로드에 성공했습니다.");
-      },
-      function (err) {
-        return alert("오류가 발생했습니다: ", err.message);
-      }
-    );
   };
 
   const HandleTextChange = (e) => {

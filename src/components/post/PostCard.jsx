@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import useInputs from "../../hooks/useInputs";
 import { useDispatch } from "react-redux";
 import { __addComment } from "../../apis/commentApi";
+import { __togglePostLikes } from "../../apis/postApi";
 
 function PostCard({ post }) {
   const navigate = useNavigate();
@@ -34,6 +35,17 @@ function PostCard({ post }) {
     });
   };
 
+  // 게시글 좋아요 버튼 클릭
+  const onTogglePostLikes = () => {
+    dispatch(__togglePostLikes(postId)).then((res) => {
+      const { payload, type } = res;
+      if (type === "togglePostLikes/fulfilled") {
+        alert(`${payload.message}`);
+        window.location.href = "/";
+      }
+    });
+  };
+
   const onDetailPage = () => {
     navigate(`/posts/${postId}`);
   };
@@ -48,7 +60,7 @@ function PostCard({ post }) {
         <Image src={postImg} />
         <PostContent>
           <ReactionWrapper>
-            <AiOutlineHeart size={25} />
+            <AiOutlineHeart size={25} onClick={onTogglePostLikes} />
             <img
               src={CommentLogo}
               style={{ width: "23px", marginLeft: "10px" }}

@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigate } from "../../node_modules/react-router-dom/dist/index";
 import { useParams } from "react-router-dom";
 import useSetUser from "../hooks/useSetUser";
