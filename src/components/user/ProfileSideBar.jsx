@@ -5,18 +5,17 @@ import useSetUser from "../../hooks/useSetUser";
 import { Colors } from "../../styles/colors";
 
 const ProfileSideBar = () => {
-  const loggedinUserId = localStorage.getItem("userId"); // 로그인한 사용자의 userId
   const user = useSetUser(); // 로그인한 사용자 정보 조회
 
   return user !== null ? (
     <ProfileSideBarWrapper>
       <Profile>
-        <Link to={`/mypage/${loggedinUserId}`}>
-          <img src={`${user.profileImg}`} alt="프로필" />
+        <Link to={`/mypage/${user?.userId}`}>
+          <img src={`${user?.profileImg}`} alt="프로필" />
         </Link>
         <div>
-          <Nickname>{user.nickname}</Nickname>
-          <Email>{user.email}</Email>
+          <Nickname>{user?.nickname}</Nickname>
+          <Email>{user?.email}</Email>
         </div>
       </Profile>
     </ProfileSideBarWrapper>
