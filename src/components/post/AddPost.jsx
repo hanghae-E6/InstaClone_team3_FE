@@ -120,8 +120,11 @@ function AddPost() {
             </ImagePreviewBox>
             <div>
               <Img src={postImg} alt="" style={{ marginBottom: "10px" }} />
-              <div size="20px">사진과 동영상을 여기에 끌어다 놓으세요</div>
-              <input type="file" onChange={handleFileInput}></input>
+              <input
+                type="file"
+                accept=".jpg, .png, .jpeg, .gif"
+                onChange={handleFileInput}
+              ></input>
             </div>
           </ImageUpload>
           <ContentUpload>

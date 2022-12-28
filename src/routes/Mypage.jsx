@@ -1,27 +1,41 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { useNavigate } from "../../node_modules/react-router-dom/dist/index";
 import { useParams } from "react-router-dom";
 import useSetUser from "../hooks/useSetUser";
-import api, { loginCheck } from "../apis/api";
+import { loginCheck } from "../apis/api";
 import styled from "styled-components";
 import ProfileTemplate from "../components/layout/ProfileTemplate";
 import { Colors } from "../styles/colors";
+import Button from "../components/common/Button";
+import { useDispatch } from "react-redux";
+import { __getPostsByUserId } from "../apis/postApi";
+import { __getFollowList } from "../apis/userApi";
 
 const Mypage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { userId } = useParams();
   const user = useSetUser(userId);
   const [userPosts, setUserPosts] = useState(null);
 
   useLayoutEffect(() => {
     loginCheck();
-    api
-      .get(`/api/posts/user/${userId}`)
-      .then((res) => {
-        setUserPosts(res.data.posts.reverse());
-      })
-      .catch((e) => alert(e));
+    // 유저 게시글 조회
+    dispatch(__getPostsByUserId(userId)).then((res) => {
+      const { type, payload } = res;
+      if (type === "getPostsByUserId/fulfilled") {
+        setUserPosts(payload.posts.reverse());
+      }
+    });
+    // 팔로잉/팔로워 목록 조회
+    dispatch(__getFollowList(userId)).then((res) => {
+      console.log(res);
+    });
   }, []);
+
+  const goToMypageEdit = () => {
+    navigate(`/mypage/${userId}/edit`);
+  };
 
   return (
     user &&
@@ -52,17 +66,52 @@ const Mypage = () => {
               flexDirection: "column",
             }}
           >
-            <UserName>{user.nickname}</UserName>
-            <PostsCounter>
-              게시물
-              <span
-                style={{
-                  fontWeight: "600",
-                  marginLeft: "4px",
-                }}
+            <Profile>
+              <UserName>{user.nickname}</UserName>
+              <Button
+                btnTheme="secondary"
+                width="105px"
+                height="32px"
+                onClick={goToMypageEdit}
               >
-                {userPosts.length}
-              </span>
+                프로필 편집
+              </Button>
+            </Profile>
+
+            <PostsCounter>
+              <div>
+                게시물
+                <span
+                  style={{
+                    fontWeight: "600",
+                    marginLeft: "4px",
+                  }}
+                >
+                  {userPosts.length}
+                </span>
+              </div>
+              <div>
+                팔로워
+                <span
+                  style={{
+                    fontWeight: "600",
+                    marginLeft: "4px",
+                  }}
+                >
+                  {0}
+                </span>
+              </div>
+              <div>
+                팔로우
+                <span
+                  style={{
+                    fontWeight: "600",
+                    marginLeft: "4px",
+                  }}
+                >
+                  {0}
+                </span>
+              </div>
             </PostsCounter>
           </div>
         </div>
@@ -115,6 +164,12 @@ const PostsCounter = styled.div`
     Arial, sans-serif;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
+  display: flex;
+  flex-direction: row;
+  div {
+    margin-right: 40px;
+    width: max-content;
+  }
 `;
 
 const DivideLine = styled.div`
@@ -131,6 +186,15 @@ const DivideLine = styled.div`
 const Post = styled.div`
   width: 358px;
   height: 358px;
+`;
+
+const Profile = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  button {
+    margin-left: 18px;
+  }
 `;
 
 export default Mypage;
