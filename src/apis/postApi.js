@@ -54,6 +54,24 @@ export const __getPostDetail = createAsyncThunk(
   }
 );
 
+// 게시글 좋아요
+export const __togglePostLikes = createAsyncThunk(
+  "togglePostLikes",
+  async (payload, thunkAPI) => {
+    const postId = payload;
+    try {
+      const response = await api.put(`/api/posts/${postId}/like`);
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+      const { status, data } = error.response;
+      if (status === 400) {
+        console.log(data.errorMessage);
+      }
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 // export const __addPosts = createAsyncThunk(
 //   "addPosts",
 //   async (payload, thunkAPI) => {

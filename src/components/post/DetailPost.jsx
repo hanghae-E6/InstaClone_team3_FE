@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import UserBox from "../postElements/UserBox";
 import { AiOutlineHeart } from "react-icons/ai";
-// import CommentLogo from "../../assets/comment.png";
-// import Image from "../postElements/Image";
 import CountLike from "../postElements/CountLike";
 import Content from "../postElements/Content";
 import { CgClose } from "react-icons/cg";
@@ -11,19 +9,37 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router";
 import CommentList from "../comment/CommentList";
 import { useDispatch } from "react-redux";
-import { __getPostDetail } from "../../apis/postApi";
+import { __getPostDetail, __togglePostLikes } from "../../apis/postApi";
 import useInputs from "../../hooks/useInputs";
 import { __addComment } from "../../apis/commentApi";
 import { loginCheck } from "../../apis/api";
 // import IconBox from "../postElements/IconBox";
+import { MdMoreHoriz } from "react-icons/md";
+import ButtonsModal from "../common/ButtonsModal";
+import api from "../../apis/api";
+
 
 function DetailPost() {
+  const loggedinUserId = localStorage.getItem("userId");
   const params = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [comments, setComments] = useState([]);
   const [post, setPost] = useState({});
   const [comment, setComment, commentHandler] = useInputs("");
+  const [flag, setFlag] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [postId, setPostId] = useState("");
+
+  // 팝업 open
+  const showPopup = () => {
+    setFlag(true);
+  };
+
+  // 팝업 close
+  const closePopup = () => {
+    setFlag(false);
+  };
 
   // 화면 로드 시 게시글상세 조회
   useEffect(() => {
@@ -34,12 +50,25 @@ function DetailPost() {
       if (type === "getPostDetail/fulfilled") {
         setPost(payload.post);
         setComments(payload.comments);
+        setUserId(payload.post.userId);
+        setPostId(String(payload.post.postId));
       } else if (type === "getPostDetail/rejected") {
         alert("알 수 없는 에러입니다.");
         navigate("/");
       }
     });
   }, []);
+
+  //게시글 삭제
+  const HandleDeletePost = async () => {
+    try {
+      await api.delete(`api/posts/${postId}`, { postId: postId });
+      alert("삭제되었습니다");
+      navigate("/");
+    } catch (e) {
+      alert(e);
+    }
+  };
 
   // 댓글 등록
   const onAddComment = () => {
@@ -53,6 +82,17 @@ function DetailPost() {
       if (type === "addComment/fulfilled") {
         alert("댓글이 정상적으로 등록되었습니다.");
         setComment("");
+        window.location.href = `/posts/${params?.postId}`;
+      }
+    });
+  };
+
+  // 게시글 좋아요 버튼 클릭
+  const onTogglePostLikes = () => {
+    dispatch(__togglePostLikes(params?.postId)).then((res) => {
+      const { payload, type } = res;
+      if (type === "togglePostLikes/fulfilled") {
+        alert(`${payload.message}`);
         window.location.href = `/posts/${params?.postId}`;
       }
     });
@@ -87,7 +127,28 @@ function DetailPost() {
             <UserBox
               userInfo={{ userId: post?.userId, nickname: post?.nickname }}
             />
+            {loggedinUserId === String(userId) ? (
+              <MdMoreHoriz
+                onClick={showPopup}
+                size={25}
+                style={{
+                  color: "black",
+                  position: "absolute",
+                  right: "2rem",
+                  top: "1rem",
+                  cursor: "pointer",
+                }}
+              />
+            ) : (
+              ""
+            )}
           </StProfile>
+          <ButtonsModal
+            visible={flag}
+            width="400px"
+            children={[{ btnName: "삭제", btnHandler: HandleDeletePost }]}
+            onClose={closePopup}
+          />
           <StContent>
             <Content
               contentInfo={{ nickname: post?.nickname, content: post?.content }}
@@ -98,7 +159,7 @@ function DetailPost() {
             {/* 댓글 아이콘 클릭 시 모달 중복으로 뜨는 문제로 수정했습니다.-전유진 */}
             {/* <IconBox/> */}
             <ReactionWrapper>
-              <AiOutlineHeart size={25} />
+              <AiOutlineHeart size={25} onClick={onTogglePostLikes} />
               <img src="img/save.PNG" className="save icon" alt="" />
             </ReactionWrapper>
             <CountLike likes={post?.likes} />
@@ -148,7 +209,11 @@ const StDetail = styled.div`
 
 const StProfile = styled.div`
   width: 100%;
-  height: 8%;
+  height: 7%;
+  justify-content: space-between;
+  display: flex;
+  position: relative;
+  border-bottom: 1px solid #dfdfdf;
 `;
 
 const StContent = styled.div`
@@ -181,6 +246,10 @@ const ReactionWrapper = styled.div`
   height: 50px;
   display: flex;
   align-items: center;
+  img,
+  svg {
+    cursor: pointer;
+  }
 `;
 
 const CommentWrapper = styled.div`

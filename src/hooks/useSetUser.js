@@ -14,7 +14,7 @@ const useSetUser = (userId) => {
         setUser(payload.user);
       }
     });
-  }, []);
+  }, [id, dispatch]);
 
   return user;
 };

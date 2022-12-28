@@ -31,7 +31,6 @@ const Info = styled.div`
   height: 60px;
   padding-left: 10px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #dfdfdf;
 `;
