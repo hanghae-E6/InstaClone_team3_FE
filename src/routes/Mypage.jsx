@@ -27,76 +27,54 @@ const Mypage = () => {
     user &&
     userPosts && (
       <ProfileTemplate>
-        <div
-          style={{
-            display: "flex",
-            width: "600px",
-            marginLeft: "5px",
-            gap: "105px",
-            alignItems: "center",
-            marginTop: "30px",
-          }}
-        >
-          <img
-            alt="userImg"
-            src={user.profileImg}
-            style={{
-              width: "180px",
-              height: "180px",
-              borderRadius: "50%",
-            }}
-          />
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
+        <UpperWrap>
+          <UserImage alt="userImg" src={user.profileImg} />
+          <UserInfo>
             <UserName>{user.nickname}</UserName>
             <PostsCounter>
               게시물
-              <span
-                style={{
-                  fontWeight: "600",
-                  marginLeft: "4px",
-                }}
-              >
-                {userPosts.length}
-              </span>
+              <PostsCount>{userPosts.length}</PostsCount>
             </PostsCounter>
-          </div>
-        </div>
+          </UserInfo>
+        </UpperWrap>
         <DivideLine></DivideLine>
-        <div
-          style={{
-            marginLeft: "-90px",
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "30px",
-            width: "1143px",
-          }}
-        >
+        <PostsWrap>
           {userPosts.map((post) => {
             return (
               <Post key={post.postId}>
-                <img
+                <PostImage
                   alt="postImg"
                   src={post.postImg}
-                  style={{
-                    width: "inherit",
-                    height: "inherit",
-                    cursor: "pointer",
-                  }}
                   onClick={() => navigate(`/posts/${post.postId}`)}
                 />
               </Post>
             );
           })}
-        </div>
+        </PostsWrap>
       </ProfileTemplate>
     )
   );
 };
+
+const UpperWrap = styled.div`
+  display: flex;
+  width: 600px;
+  margin-left: 5px;
+  gap: 105px;
+  align-items: center;
+  margin-top: 30px;
+`;
+
+const UserImage = styled.img`
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+`;
+
+const UserInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 const UserName = styled.h2`
   font-size: 34px;
@@ -117,6 +95,10 @@ const PostsCounter = styled.div`
     Arial, sans-serif;
 `;
 
+const PostsCount = styled.span`
+  font-weight: 600;
+  margin-left: 4px;
+`;
 const DivideLine = styled.div`
   display: block;
   height: 0px;
@@ -128,9 +110,22 @@ const DivideLine = styled.div`
   margin-bottom: 30px;
 `;
 
+const PostsWrap = styled.div`
+  margin-left: -90px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  width: 1143px;
+`;
 const Post = styled.div`
   width: 358px;
   height: 358px;
+`;
+
+const PostImage = styled.img`
+  width: inherit;
+  height: inherit;
+  cursor: pointer;
 `;
 
 export default Mypage;
