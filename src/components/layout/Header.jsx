@@ -12,6 +12,15 @@ import useSetUser from "../../hooks/useSetUser";
 const Header = () => {
   const user = useSetUser(); // 사용자 정보 조회
 
+  const logout = () => {
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      localStorage.removeItem("accessToken"); // access token을 지운다
+      localStorage.removeItem("refreshToken"); // refresh token을 지운다
+      localStorage.removeItem("userId"); // localstorage의 userId를 지운다
+      window.location.href = "/";
+    }
+  };
+
   return (
     <HeaderWrapper>
       <h1>Instar⭐gram</h1>
@@ -34,7 +43,7 @@ const Header = () => {
           </Link>
         </li>
       </MenuList>
-      <Logout>
+      <Logout onClick={logout}>
         <span>로그아웃</span>
       </Logout>
     </HeaderWrapper>
@@ -60,6 +69,7 @@ const HeaderWrapper = styled.div`
   border-right: 1px solid ${Colors.grey};
   padding: 45px 20px 12px 28px;
   color: rgb(38, 38, 38);
+  z-index: 1;
   h1 {
     @import url("https://fonts.googleapis.com/css2?family=Oleo+Script&display=swap");
     font-family: "Oleo Script", cursive;
