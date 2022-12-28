@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import UserBox from "../postElements/UserBox";
 import { AiOutlineHeart } from "react-icons/ai";
-// import CommentLogo from "../../assets/comment.png";
-// import Image from "../postElements/Image";
 import CountLike from "../postElements/CountLike";
 import Content from "../postElements/Content";
 import { CgClose } from "react-icons/cg";
@@ -11,10 +9,9 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router";
 import CommentList from "../comment/CommentList";
 import { useDispatch } from "react-redux";
-import { __getPostDetail } from "../../apis/postApi";
+import { __getPostDetail, __togglePostLikes } from "../../apis/postApi";
 import useInputs from "../../hooks/useInputs";
 import { __addComment } from "../../apis/commentApi";
-// import IconBox from "../postElements/IconBox";
 
 function DetailPost() {
   const params = useParams();
@@ -51,6 +48,17 @@ function DetailPost() {
       if (type === "addComment/fulfilled") {
         alert("댓글이 정상적으로 등록되었습니다.");
         setComment("");
+        window.location.href = `/posts/${params?.postId}`;
+      }
+    });
+  };
+
+  // 게시글 좋아요 버튼 클릭
+  const onTogglePostLikes = () => {
+    dispatch(__togglePostLikes(params?.postId)).then((res) => {
+      const { payload, type } = res;
+      if (type === "togglePostLikes/fulfilled") {
+        alert(`${payload.message}`);
         window.location.href = `/posts/${params?.postId}`;
       }
     });
@@ -96,7 +104,7 @@ function DetailPost() {
             {/* 댓글 아이콘 클릭 시 모달 중복으로 뜨는 문제로 수정했습니다.-전유진 */}
             {/* <IconBox/> */}
             <ReactionWrapper>
-              <AiOutlineHeart size={25} />
+              <AiOutlineHeart size={25} onClick={onTogglePostLikes} />
               <img src="img/save.PNG" className="save icon" alt="" />
             </ReactionWrapper>
             <CountLike likes={post?.likes} />
@@ -179,6 +187,10 @@ const ReactionWrapper = styled.div`
   height: 50px;
   display: flex;
   align-items: center;
+  img,
+  svg {
+    cursor: pointer;
+  }
 `;
 
 const CommentWrapper = styled.div`
