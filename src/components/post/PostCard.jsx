@@ -56,12 +56,6 @@ function PostCard({ post }) {
               alt=""
               onClick={onDetailPage}
             />
-            {/* <img
-              src={DmLogo}
-              style={{ width: "22px", marginLeft: "10px" }}
-              className="icon"
-              alt=""
-            /> */}
             <img src="img/save.PNG" className="save icon" alt="" />
           </ReactionWrapper>
           {/* <Likes>좋아요 1만개</Likes> */}

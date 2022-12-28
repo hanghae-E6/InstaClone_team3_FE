@@ -13,6 +13,7 @@ const Description = styled.p`
   margin: 10px 0;
   font-size: 14px;
   line-height: 20px;
+  max-width: 430px;
   max-height: 280px;
   overflow-y: scroll;
   -ms-overflow-style: none; /* IE and Edge */
