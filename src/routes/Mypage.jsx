@@ -101,15 +101,15 @@ const Mypage = () => {
 const UpperWrap = styled.div`
   display: flex;
   width: 600px;
-  margin-left: 5px;
-  gap: 105px;
+  margin-left: 40px;
+  gap: 115px;
   align-items: center;
   margin-top: 30px;
 `;
 
 const UserImage = styled.img`
-  width: 180px;
-  height: 180px;
+  width: 170px;
+  height: 170px;
   border-radius: 50%;
 `;
 
@@ -119,7 +119,7 @@ const UserInfo = styled.div`
 `;
 
 const UserName = styled.h2`
-  font-size: 34px;
+  font-size: 30px;
   font-weight: 300;
   margin-bottom: 40px;
   color: rgb(38, 38, 38);
@@ -128,8 +128,8 @@ const UserName = styled.h2`
 `;
 
 const Counter = styled.div`
-  font-size: 20px;
-  font-weight: 400;
+  font-size: 18px;
+  font-weight: 300;
   color: rgb(38, 38, 38);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
@@ -152,19 +152,19 @@ const DivideLine = styled.div`
   display: block;
   height: 0px;
   background-color: ${Colors.grey};
-  width: 1133px;
+  width: 1050px;
   border: 1px solid ${Colors.grey};
-  margin-left: -90px;
+  margin-left: -40px;
   margin-top: 40px;
   margin-bottom: 30px;
 `;
 
 const PostsWrap = styled.div`
-  margin-left: -90px;
+  margin-left: -41px;
   display: flex;
   flex-wrap: wrap;
-  gap: 30px;
-  width: 1143px;
+  gap: 32px;
+  width: 1055px;
 `;
 
 const Profile = styled.div`
