@@ -4,7 +4,7 @@ import styled from "styled-components";
 import useClickAway from "../../hooks/useClickAway";
 import { CgClose } from "react-icons/cg";
 
-const Modal = ({ visible, title, children, onSubmit, onClose }) => {
+const Modal = ({ visible, title, width, children, onSubmit, onClose }) => {
   const { ref } = useClickAway(onClose);
   const portalDiv = document.querySelector("#modal-root");
   if (!portalDiv) {
@@ -27,7 +27,7 @@ const Modal = ({ visible, title, children, onSubmit, onClose }) => {
                 cursor: "pointer",
               }}
             />
-            <ModalBox ref={ref}>
+            <ModalBox ref={ref} width={width}>
               {/* <h3 style={{ textAlign: "center" }}>{title}</h3> */}
               <div>{children}</div>
               {/* <ButtonsBox>
@@ -70,6 +70,7 @@ const ModalBox = styled.div`
   z-index: 20;
   min-height: 140px;
   max-width: 700px;
+  width: ${({ width }) => (width ? width : "auto")};
   /* padding: 30px 90px 30px 90px; */
   margin: auto;
   border-radius: 10px;

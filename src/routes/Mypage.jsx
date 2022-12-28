@@ -13,6 +13,8 @@ import Button from "../components/common/Button";
 import { Colors } from "../styles/colors";
 import "../components/mypage/style/mypage.css";
 import MyPost from "../components/mypage/MyPost";
+import Modal from "../components/common/Modal";
+import FollowingList from "../components/mypage/FollowingList";
 
 const Mypage = () => {
   const navigate = useNavigate();
@@ -22,6 +24,17 @@ const Mypage = () => {
   const [userPosts, setUserPosts] = useState(null);
   const [followingList, setFollowingList] = useState([]); // 팔로잉 리스트
   const [followerList, setFollowerList] = useState([]); // 팔로워 리스트
+  const [flag, setFlag] = useState(false);
+  const [followFlag, setFollowFlag] = useState(null); // 팔로잉/팔로워 플래그
+
+  const showPopup = (followFlag) => {
+    setFlag(true);
+    setFollowFlag(followFlag);
+  };
+
+  const closePopup = () => {
+    setFlag(false);
+  };
 
   // 팔로잉/팔로워 목록 조회
   const getFollowList = () => {
@@ -105,7 +118,7 @@ const Mypage = () => {
                 게시물
                 <Count>{userPosts.length}</Count>
               </div>
-              <div>
+              <div onClick={() => showPopup("follower")}>
                 팔로워
                 <span
                   style={{
@@ -116,7 +129,7 @@ const Mypage = () => {
                   {followerList.length}
                 </span>
               </div>
-              <div>
+              <div onClick={() => showPopup("following")}>
                 팔로우
                 <span
                   style={{
@@ -136,6 +149,13 @@ const Mypage = () => {
             return <MyPost key={post.postId} post={post} />;
           })}
         </PostsWrap>
+        <Modal visible={flag} onClose={closePopup} width="400px">
+          {followFlag === "following" ? (
+            <FollowingList followList={followingList} />
+          ) : (
+            <FollowingList followList={followerList} />
+          )}
+        </Modal>
       </ProfileTemplate>
     )
   );
