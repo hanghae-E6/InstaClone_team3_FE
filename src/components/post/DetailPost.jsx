@@ -12,6 +12,9 @@ import { useDispatch } from "react-redux";
 import { __getPostDetail, __togglePostLikes } from "../../apis/postApi";
 import useInputs from "../../hooks/useInputs";
 import { __addComment } from "../../apis/commentApi";
+import { loginCheck } from "../../apis/api";
+// import IconBox from "../postElements/IconBox";
+
 
 function DetailPost() {
   const params = useParams();
@@ -23,6 +26,7 @@ function DetailPost() {
 
   // 화면 로드 시 게시글상세 조회
   useEffect(() => {
+    loginCheck();
     dispatch(__getPostDetail(params?.postId)).then((res) => {
       const { type, payload } = res;
 

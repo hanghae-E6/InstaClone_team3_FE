@@ -17,6 +17,14 @@ export const imageApi = axios.create({
   },
 });
 
+export const loginCheck = () => {
+  const refreshToken = localStorage.getItem("refreshToken");
+  if (!refreshToken) {
+    localStorage.clear();
+    window.location.assign("/");
+  }
+};
+
 api.interceptors.request.use(function (config) {
   const accessToken = localStorage.getItem("accessToken");
   const refreshToken = localStorage.getItem("refreshToken");
