@@ -6,21 +6,12 @@ import {
   MdAddCircleOutline,
   MdAccountCircle,
 } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
-// import Modal from "../common/Modal";
-// import AddPost from "../post/AddPost";
+import { Link } from "react-router-dom";
+import useSetUser from "../../hooks/useSetUser";
 
 const Header = () => {
-  const navigate = useNavigate();
-  // const [flag, setFlag] = useState(false);
+  const user = useSetUser(); // 사용자 정보 조회
 
-  // const showPopup = () => {
-  //   setFlag(true);
-  // };
-
-  // const closePopup = () => {
-  //   setFlag(false);
-  // };
   return (
     <HeaderWrapper>
       <h1>Instar⭐gram</h1>
@@ -40,7 +31,7 @@ const Header = () => {
           </Link>
         </li>
         <li>
-          <Link>
+          <Link to={`/mypage/${user?.userId}`}>
             <MdAccountCircle />
             프로필
           </Link>
@@ -56,7 +47,7 @@ const Header = () => {
 const HeaderWrapper = styled.div`
   position: fixed;
   top: 0;
-  width: 224px;
+  width: 336px;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -70,7 +61,7 @@ const HeaderWrapper = styled.div`
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   border-right: 1px solid ${Colors.grey};
-  padding: 45px 20px 12px 20px;
+  padding: 45px 20px 12px 28px;
   color: rgb(38, 38, 38);
   h1 {
     font-size: 25px;
