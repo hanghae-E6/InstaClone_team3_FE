@@ -76,7 +76,7 @@ function AddPost() {
         const { status, data } = res;
         if (status === 201) {
           alert(`${data.message}`);
-          navigate("/");
+          navigate(-1);
         }
       });
     } catch (e) {
@@ -121,13 +121,20 @@ function AddPost() {
             </ImagePreviewBox>
             <div>
               <Img src={postImg} alt="" style={{ marginBottom: "10px" }} />
-              <div size="20px">사진과 동영상을 여기에 끌어다 놓으세요</div>
-              <input type="file" onChange={handleFileInput}></input>
+              <input
+                type="file"
+                accept=".jpg, .png, .jpeg, .gif"
+                onChange={handleFileInput}
+              ></input>
             </div>
           </ImageUpload>
           <ContentUpload>
             <UserBox userInfo={{ userId }} />
-            <TextArea placeholder="문구 입력..." onChange={HandleTextChange} />
+            <TextArea
+              placeholder="문구 입력..."
+              onChange={HandleTextChange}
+              maxLength="2000"
+            />
           </ContentUpload>
         </ContentsWrapper>
       </Wrapper>
@@ -211,6 +218,8 @@ const TextArea = styled.textarea`
 
 const ImagePreviewBox = styled.div`
   margin: 10px;
+  max-height: 200px;
+  overflow-y: hidden;
 `;
 
 export default AddPost;

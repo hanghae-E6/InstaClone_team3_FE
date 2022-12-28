@@ -72,6 +72,8 @@ const Nickname = styled.span`
 const Comment = styled.span`
   white-space: pre-wrap;
   color: rgb(38, 38, 38);
+  line-height: 1.5;
+  font-size: 13.5px;
 `;
 
 export default memo(CommentItem);

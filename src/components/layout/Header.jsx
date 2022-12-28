@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
 import { Colors } from "../../styles/colors";
 import {
@@ -12,6 +12,15 @@ import useSetUser from "../../hooks/useSetUser";
 const Header = () => {
   const user = useSetUser(); // 사용자 정보 조회
 
+  const logout = () => {
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      localStorage.removeItem("accessToken"); // access token을 지운다
+      localStorage.removeItem("refreshToken"); // refresh token을 지운다
+      localStorage.removeItem("userId"); // localstorage의 userId를 지운다
+      window.location.href = "/";
+    }
+  };
+
   return (
     <HeaderWrapper>
       <h1>Instar⭐gram</h1>
@@ -23,9 +32,6 @@ const Header = () => {
         </li>
         <li>
           <Link to="/write">
-            {/* <Modal visible={flag} onClose={closePopup}>
-              <AddPost></AddPost>
-            </Modal> */}
             <MdAddCircleOutline />
             만들기
           </Link>
@@ -37,7 +43,7 @@ const Header = () => {
           </Link>
         </li>
       </MenuList>
-      <Logout>
+      <Logout onClick={logout}>
         <span>로그아웃</span>
       </Logout>
     </HeaderWrapper>
@@ -63,8 +69,11 @@ const HeaderWrapper = styled.div`
   border-right: 1px solid ${Colors.grey};
   padding: 45px 20px 12px 28px;
   color: rgb(38, 38, 38);
+  z-index: 1;
   h1 {
-    font-size: 25px;
+    @import url("https://fonts.googleapis.com/css2?family=Oleo+Script&display=swap");
+    font-family: "Oleo Script", cursive;
+    font-size: 30px;
     margin-bottom: 60px;
   }
 
@@ -102,4 +111,4 @@ const Logout = styled.div`
 `;
 
 const MenuList = styled.ul``;
-export default Header;
+export default memo(Header);

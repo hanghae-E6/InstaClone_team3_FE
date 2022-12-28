@@ -1,10 +1,9 @@
-import Button from "./Button";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
 import useClickAway from "../../hooks/useClickAway";
 import { CgClose } from "react-icons/cg";
 
-const Modal = ({ visible, title, children, onSubmit, onClose }) => {
+const Modal = ({ visible, title, width, children, onSubmit, onClose }) => {
   const { ref } = useClickAway(onClose);
   const portalDiv = document.querySelector("#modal-root");
   if (!portalDiv) {
@@ -27,20 +26,8 @@ const Modal = ({ visible, title, children, onSubmit, onClose }) => {
                 cursor: "pointer",
               }}
             />
-            <ModalBox ref={ref}>
-              {/* <h3 style={{ textAlign: "center" }}>{title}</h3> */}
+            <ModalBox ref={ref} width={width}>
               <div>{children}</div>
-              {/* <ButtonsBox>
-                {onSubmit && <Button onClick={onSubmit}>제출하기</Button>}
-                <Button
-                  btnTheme="secondary"
-                  onClick={onClose}
-                  width="100px"
-                  height="30px"
-                >
-                  뒤로가기
-                </Button>
-              </ButtonsBox> */}
             </ModalBox>
           </Background>,
           portalDiv
@@ -70,6 +57,7 @@ const ModalBox = styled.div`
   z-index: 20;
   min-height: 140px;
   max-width: 700px;
+  width: ${({ width }) => (width ? width : "auto")};
   /* padding: 30px 90px 30px 90px; */
   margin: auto;
   border-radius: 10px;
