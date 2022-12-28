@@ -99,6 +99,7 @@ const PostsCount = styled.span`
   font-weight: 600;
   margin-left: 4px;
 `;
+
 const DivideLine = styled.div`
   display: block;
   height: 0px;
@@ -117,7 +118,11 @@ const PostsWrap = styled.div`
   gap: 30px;
   width: 1143px;
 `;
+
 const Post = styled.div`
+  &:hover {
+    opacity: 0.3;
+  }
   width: 358px;
   height: 358px;
 `;
