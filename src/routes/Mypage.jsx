@@ -1,27 +1,28 @@
-import { useEffect, useLayoutEffect, useState } from "react";
-import { useNavigate } from "../../node_modules/react-router-dom/dist/index";
+import { useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useSetUser from "../hooks/useSetUser";
 import api, { loginCheck } from "../apis/api";
 import styled from "styled-components";
 import ProfileTemplate from "../components/layout/ProfileTemplate";
+import MyPost from "../components/mypage/MyPost";
 import { Colors } from "../styles/colors";
+import "../components/mypage/style/mypage.css";
 
 const Mypage = () => {
-  const navigate = useNavigate();
   const { userId } = useParams();
   const user = useSetUser(userId);
   const [userPosts, setUserPosts] = useState(null);
 
   useLayoutEffect(() => {
     loginCheck();
+
     api
       .get(`/api/posts/user/${userId}`)
       .then((res) => {
         setUserPosts(res.data.posts.reverse());
       })
       .catch((e) => alert(e));
-  }, []);
+  }, [userId]);
 
   return (
     user &&
@@ -40,15 +41,7 @@ const Mypage = () => {
         <DivideLine></DivideLine>
         <PostsWrap>
           {userPosts.map((post) => {
-            return (
-              <Post key={post.postId}>
-                <PostImage
-                  alt="postImg"
-                  src={post.postImg}
-                  onClick={() => navigate(`/posts/${post.postId}`)}
-                />
-              </Post>
-            );
+            return <MyPost key={post.postId} post={post} />;
           })}
         </PostsWrap>
       </ProfileTemplate>
@@ -117,20 +110,6 @@ const PostsWrap = styled.div`
   flex-wrap: wrap;
   gap: 30px;
   width: 1143px;
-`;
-
-const Post = styled.div`
-  &:hover {
-    opacity: 0.3;
-  }
-  width: 358px;
-  height: 358px;
-`;
-
-const PostImage = styled.img`
-  width: inherit;
-  height: inherit;
-  cursor: pointer;
 `;
 
 export default Mypage;

@@ -1,0 +1,7 @@
+.post:hover .hover-effect {
+  opacity: 0.3;
+}
+
+.post:hover .hover-icons {
+  opacity: 1;
+}
