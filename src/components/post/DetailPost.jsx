@@ -3,7 +3,7 @@ import styled from "styled-components";
 import UserBox from "../postElements/UserBox";
 import { AiOutlineHeart } from "react-icons/ai";
 // import CommentLogo from "../../assets/comment.png";
-import Image from "../postElements/Image";
+// import Image from "../postElements/Image";
 import CountLike from "../postElements/CountLike";
 import Content from "../postElements/Content";
 import { CgClose } from "react-icons/cg";
@@ -41,6 +41,10 @@ function DetailPost() {
 
   // 댓글 등록
   const onAddComment = () => {
+    if (comment === "") {
+      alert("댓글을 입력해주세요.");
+      return;
+    }
     dispatch(__addComment({ postId: params?.postId, comment })).then((res) => {
       const { type } = res;
 
@@ -70,7 +74,11 @@ function DetailPost() {
       />
       <Wrapper>
         <StImage>
-          <Image src={post?.postImg} />
+          <ImageWrapper>
+            <PostingImage>
+              <Element src={post?.postImg} alt="" />
+            </PostingImage>
+          </ImageWrapper>
         </StImage>
         <StDetail>
           <StProfile>
@@ -155,10 +163,10 @@ const StLikes = styled.div`
   border-bottom: 1px solid #bcbcbc;
 `;
 
-const StcommentInput = styled.div`
-  width: 100%;
-  height: 6%;
-`;
+// const StcommentInput = styled.div`
+//   width: 100%;
+//   height: 6%;
+// `;
 
 const PostTime = styled.p`
   color: rgba(0, 0, 0, 0.5);
@@ -199,5 +207,22 @@ const CommentBtn = styled.span`
   color: rgb(0, 162, 255);
   cursor: pointer;
   font-weight: bold;
+`;
+
+const ImageWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: table;
+`;
+
+const PostingImage = styled.div`
+  display: table-cell;
+  vertical-align: middle;
+`;
+
+const Element = styled.img`
+  max-width: 300px;
+  max-height: 700px;
 `;
 export default DetailPost;
