@@ -41,6 +41,10 @@ function DetailPost() {
 
   // 댓글 등록
   const onAddComment = () => {
+    if (comment === "") {
+      alert("댓글을 입력해주세요.");
+      return;
+    }
     dispatch(__addComment({ postId: params?.postId, comment })).then((res) => {
       const { type } = res;
 

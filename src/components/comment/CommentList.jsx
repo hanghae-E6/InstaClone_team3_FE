@@ -12,6 +12,7 @@ const CommentList = ({ comments, postId }) => {
               key={comment.commentId}
               commentInfo={comment}
               postId={postId}
+              userId={comment.userId}
             />
           ))}
       </CommentListBox>

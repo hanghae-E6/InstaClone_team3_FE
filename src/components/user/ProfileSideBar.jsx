@@ -1,23 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { __getUserInfo } from "../../apis/userApi";
+import useSetUser from "../../hooks/useSetUser";
 import { Colors } from "../../styles/colors";
 
 const ProfileSideBar = () => {
-  const dispatch = useDispatch();
   const loggedinUserId = localStorage.getItem("userId"); // 로그인한 사용자의 userId
-  const [user, setUser] = useState(null);
+  const user = useSetUser(); // 로그인한 사용자 정보 조회
 
-  useEffect(() => {
-    dispatch(__getUserInfo(loggedinUserId)).then((res) => {
-      const { type, payload } = res;
-      if (type === "getUserInfo/fulfilled") {
-        setUser(payload.user);
-      }
-    });
-  }, []);
   return user !== null ? (
     <ProfileSideBarWrapper>
       <Profile>
