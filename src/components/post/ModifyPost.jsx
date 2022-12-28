@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import styled from "styled-components";
 import UserBox from "../postElements/UserBox";
 import { CgClose } from "react-icons/cg";
@@ -6,6 +6,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { imageApi, loginCheck } from "../../apis/api";
 import api from "../../apis/api";
 import AWS from "aws-sdk";
+
+AWS.config.update({
+  region: "ap-northeast-2", // 버킷이 존재하는 리전을 문자열로 입력합니다. (Ex. "ap-northeast-2")
+  credentials: new AWS.CognitoIdentityCredentials({
+    IdentityPoolId: "ap-northeast-2:1bbf07d0-8045-44b0-8079-1af8ef68198e", // cognito 인증 풀에서 받아온 키를 문자열로 입력합니다. (Ex. "ap-northeast-2...")
+  }),
+});
 
 function ModifyPost() {
   const userId = localStorage.getItem("userId"); // 로그인한 사용자의 userId
@@ -16,13 +23,17 @@ function ModifyPost() {
   const [content, setContent] = useState("");
   const [prevImg, setPrevImg] = useState("");
 
+  useLayoutEffect(() => {
+    loginCheck();
+  }, []);
+
   useEffect(() => {
     const getCurrentPost = async () => {
       const data = await api.get(`api/posts/${postId}`);
       return data;
     };
     getCurrentPost().then((res) => {
-      console.log("왁", res);
+      // console.log("왁", res);
       setCurrentImg(res.data.post.postImg);
       setContent(res.data.post.content);
     });
@@ -74,9 +85,13 @@ function ModifyPost() {
 
     try {
       const res = await imageApi.put(`api/posts/${postId}`, formData);
-      console.log("모야", formData);
-      console.log("이거시", res);
-      navigate(`/posts/${postId}`);
+      // console.log("모야", formData);
+      // console.log("이거시", res);
+      const { status, data } = res;
+      if (status === 200) {
+        alert(`${data.message}`);
+        navigate(`/posts/${postId}`);
+      }
     } catch (e) {
       alert(e.response.data.errorMessage);
     }
