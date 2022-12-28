@@ -28,8 +28,8 @@ function UserBox({ userInfo }) {
 }
 
 const Info = styled.div`
-  width: 100%;
-  height: 50px;
+  height: 60px;
+  padding-left: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
