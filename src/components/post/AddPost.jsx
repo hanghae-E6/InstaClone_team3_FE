@@ -75,7 +75,7 @@ function AddPost() {
         const { status, data } = res;
         if (status === 201) {
           alert(`${data.message}`);
-          navigate("/");
+          navigate(-1);
         }
       });
     } catch (e) {

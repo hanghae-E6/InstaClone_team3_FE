@@ -1,15 +1,21 @@
 import { useLayoutEffect, useState } from "react";
 import { useNavigate } from "../../node_modules/react-router-dom/dist/index";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import useSetUser from "../hooks/useSetUser";
 import { loginCheck } from "../apis/api";
+import api from "../apis/api";
+import { __getPostsByUserId } from "../apis/postApi";
+import { __getFollowList } from "../apis/userApi";
 import styled from "styled-components";
 import ProfileTemplate from "../components/layout/ProfileTemplate";
-import { Colors } from "../styles/colors";
 import Button from "../components/common/Button";
 import { useDispatch } from "react-redux";
 import { __getPostsByUserId } from "../apis/postApi";
 import { __getFollowList, __toggleFollow } from "../apis/userApi";
+import { Colors } from "../styles/colors";
+import "../components/mypage/style/mypage.css";
+import MyPost from "../components/mypage/MyPost";
 
 const Mypage = () => {
   const navigate = useNavigate();
@@ -33,6 +39,13 @@ const Mypage = () => {
 
   useLayoutEffect(() => {
     loginCheck();
+
+    api
+      .get(`/api/posts/user/${userId}`)
+      .then((res) => {
+        setUserPosts(res.data.posts.reverse());
+      })
+      .catch((e) => alert(e));
     // 유저 게시글 조회
     dispatch(__getPostsByUserId(userId)).then((res) => {
       const { type, payload } = res;
@@ -43,6 +56,7 @@ const Mypage = () => {
     // 팔로잉/팔로워 목록 조회
     getFollowList();
   }, []);
+
 
   // 프로필편집페이지로 이동
   const goToMypageEdit = () => {
@@ -65,31 +79,9 @@ const Mypage = () => {
     user &&
     userPosts && (
       <ProfileTemplate>
-        <div
-          style={{
-            display: "flex",
-            width: "600px",
-            marginLeft: "5px",
-            gap: "105px",
-            alignItems: "center",
-            marginTop: "30px",
-          }}
-        >
-          <img
-            alt="userImg"
-            src={user.profileImg}
-            style={{
-              width: "180px",
-              height: "180px",
-              borderRadius: "50%",
-            }}
-          />
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
+        <UpperWrap>
+          <UserImage alt="userImg" src={user.profileImg} />
+          <UserInfo>
             <Profile>
               <UserName>{user.nickname}</UserName>
               {localStorage.getItem("userId") === userId ? (
@@ -112,18 +104,10 @@ const Mypage = () => {
                 </Button>
               )}
             </Profile>
-
-            <PostsCounter>
+            <Counter>
               <div>
                 게시물
-                <span
-                  style={{
-                    fontWeight: "600",
-                    marginLeft: "4px",
-                  }}
-                >
-                  {userPosts.length}
-                </span>
+                <Count>{userPosts.length}</Count>
               </div>
               <div>
                 팔로워
@@ -147,40 +131,39 @@ const Mypage = () => {
                   {followingList.length}
                 </span>
               </div>
-            </PostsCounter>
-          </div>
-        </div>
+            </Counter>
+          </UserInfo>
+        </UpperWrap>
         <DivideLine></DivideLine>
-        <div
-          style={{
-            marginLeft: "-90px",
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "30px",
-            width: "1143px",
-          }}
-        >
+        <PostsWrap>
           {userPosts.map((post) => {
-            return (
-              <Post key={post.postId}>
-                <img
-                  alt="postImg"
-                  src={post.postImg}
-                  style={{
-                    width: "inherit",
-                    height: "inherit",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => navigate(`/posts/${post.postId}`)}
-                />
-              </Post>
-            );
+            return <MyPost key={post.postId} post={post} />;
           })}
-        </div>
+        </PostsWrap>
       </ProfileTemplate>
     )
   );
 };
+
+const UpperWrap = styled.div`
+  display: flex;
+  width: 600px;
+  margin-left: 5px;
+  gap: 105px;
+  align-items: center;
+  margin-top: 30px;
+`;
+
+const UserImage = styled.img`
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+`;
+
+const UserInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 const UserName = styled.h2`
   font-size: 34px;
@@ -191,7 +174,7 @@ const UserName = styled.h2`
     Arial, sans-serif;
 `;
 
-const PostsCounter = styled.div`
+const Counter = styled.div`
   font-size: 20px;
   font-weight: 400;
   color: rgb(38, 38, 38);
@@ -207,6 +190,11 @@ const PostsCounter = styled.div`
   }
 `;
 
+const Count = styled.span`
+  font-weight: 600;
+  margin-left: 5px;
+`;
+
 const DivideLine = styled.div`
   display: block;
   height: 0px;
@@ -218,9 +206,12 @@ const DivideLine = styled.div`
   margin-bottom: 30px;
 `;
 
-const Post = styled.div`
-  width: 358px;
-  height: 358px;
+const PostsWrap = styled.div`
+  margin-left: -90px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  width: 1143px;
 `;
 
 const Profile = styled.div`
