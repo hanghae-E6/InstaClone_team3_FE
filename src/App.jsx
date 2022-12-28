@@ -6,6 +6,7 @@ import DetailPost from "./components/post/DetailPost";
 import Mypage from "./routes/Mypage";
 // import CommentTest from "./routes/CommentTest";
 import AddPost from "./components/post/AddPost";
+import ModifyPost from "./components/post/ModifyPost";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route exact path="/posts/:postId" element={<DetailPost />} />
         <Route exact path="/mypage/:userId" element={<Mypage />} />
         <Route exact path="/write" element={<AddPost />} />
+        <Route exact path="/write/:postId" element={<ModifyPost />} />
       </Routes>
     </Router>
   );

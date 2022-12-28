@@ -18,7 +18,6 @@ import { MdMoreHoriz } from "react-icons/md";
 import ButtonsModal from "../common/ButtonsModal";
 import api from "../../apis/api";
 
-
 function DetailPost() {
   const loggedinUserId = localStorage.getItem("userId");
   const params = useParams();
@@ -70,6 +69,11 @@ function DetailPost() {
     }
   };
 
+  //게시글 수정
+  const HandleModifyPost = () => {
+    navigate(`/write/${postId}`);
+  };
+
   // 댓글 등록
   const onAddComment = () => {
     if (comment === "") {
@@ -104,7 +108,7 @@ function DetailPost() {
         className="close"
         size={25}
         onClick={() => {
-          navigate(-1);
+          navigate("/");
         }}
         style={{
           color: "white",
@@ -146,7 +150,10 @@ function DetailPost() {
           <ButtonsModal
             visible={flag}
             width="400px"
-            children={[{ btnName: "삭제", btnHandler: HandleDeletePost }]}
+            children={[
+              { btnName: "삭제", btnHandler: HandleDeletePost },
+              { btnName: "수정", btnHandler: HandleModifyPost },
+            ]}
             onClose={closePopup}
           />
           <StContent>
