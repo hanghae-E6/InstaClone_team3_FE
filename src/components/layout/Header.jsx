@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
 import { Colors } from "../../styles/colors";
 import {
@@ -23,9 +23,6 @@ const Header = () => {
         </li>
         <li>
           <Link to="/write">
-            {/* <Modal visible={flag} onClose={closePopup}>
-              <AddPost></AddPost>
-            </Modal> */}
             <MdAddCircleOutline />
             만들기
           </Link>
@@ -102,4 +99,4 @@ const Logout = styled.div`
 `;
 
 const MenuList = styled.ul``;
-export default Header;
+export default memo(Header);

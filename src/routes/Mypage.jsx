@@ -9,7 +9,7 @@ import { Colors } from "../styles/colors";
 import Button from "../components/common/Button";
 import { useDispatch } from "react-redux";
 import { __getPostsByUserId } from "../apis/postApi";
-import { __getFollowList } from "../apis/userApi";
+import { __getFollowList, __toggleFollow } from "../apis/userApi";
 
 const Mypage = () => {
   const navigate = useNavigate();
@@ -17,6 +17,19 @@ const Mypage = () => {
   const { userId } = useParams();
   const user = useSetUser(userId);
   const [userPosts, setUserPosts] = useState(null);
+  const [followingList, setFollowingList] = useState([]); // 팔로잉 리스트
+  const [followerList, setFollowerList] = useState([]); // 팔로워 리스트
+
+  // 팔로잉/팔로워 목록 조회
+  const getFollowList = () => {
+    dispatch(__getFollowList(userId)).then((res) => {
+      const { type, payload } = res;
+      if (type === "getFollowList/fulfilled") {
+        setFollowingList(payload.followList.following);
+        setFollowerList(payload.followList.follower);
+      }
+    });
+  };
 
   useLayoutEffect(() => {
     loginCheck();
@@ -28,13 +41,24 @@ const Mypage = () => {
       }
     });
     // 팔로잉/팔로워 목록 조회
-    dispatch(__getFollowList(userId)).then((res) => {
-      console.log(res);
-    });
+    getFollowList();
   }, []);
 
+  // 프로필편집페이지로 이동
   const goToMypageEdit = () => {
     navigate(`/mypage/${userId}/edit`);
+  };
+
+  // 팔로우 버튼 클릭
+  const onClickFollow = () => {
+    dispatch(__toggleFollow(userId)).then((res) => {
+      const { type, payload } = res;
+      if (type === "toggleFollow/fulfilled") {
+        alert(`${payload.message}`);
+        // 팔로잉/팔로워 목록 조회
+        getFollowList();
+      }
+    });
   };
 
   return (
@@ -78,7 +102,12 @@ const Mypage = () => {
                   프로필 편집
                 </Button>
               ) : (
-                <Button btnTheme="secondary" width="105px" height="32px">
+                <Button
+                  btnTheme="secondary"
+                  width="105px"
+                  height="32px"
+                  onClick={() => onClickFollow()}
+                >
                   팔로우
                 </Button>
               )}
@@ -104,7 +133,7 @@ const Mypage = () => {
                     marginLeft: "4px",
                   }}
                 >
-                  {0}
+                  {followerList.length}
                 </span>
               </div>
               <div>
@@ -115,7 +144,7 @@ const Mypage = () => {
                     marginLeft: "4px",
                   }}
                 >
-                  {0}
+                  {followingList.length}
                 </span>
               </div>
             </PostsCounter>

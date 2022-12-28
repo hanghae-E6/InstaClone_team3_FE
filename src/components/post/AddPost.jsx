@@ -129,7 +129,11 @@ function AddPost() {
           </ImageUpload>
           <ContentUpload>
             <UserBox userInfo={{ userId }} />
-            <TextArea placeholder="문구 입력..." onChange={HandleTextChange} />
+            <TextArea
+              placeholder="문구 입력..."
+              onChange={HandleTextChange}
+              maxLength="2000"
+            />
           </ContentUpload>
         </ContentsWrapper>
       </Wrapper>
@@ -213,6 +217,8 @@ const TextArea = styled.textarea`
 
 const ImagePreviewBox = styled.div`
   margin: 10px;
+  max-height: 200px;
+  overflow-y: hidden;
 `;
 
 export default AddPost;

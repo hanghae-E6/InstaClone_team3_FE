@@ -18,7 +18,6 @@ import { MdMoreHoriz } from "react-icons/md";
 import ButtonsModal from "../common/ButtonsModal";
 import api from "../../apis/api";
 
-
 function DetailPost() {
   const loggedinUserId = localStorage.getItem("userId");
   const params = useParams();
@@ -41,9 +40,8 @@ function DetailPost() {
     setFlag(false);
   };
 
-  // 화면 로드 시 게시글상세 조회
-  useEffect(() => {
-    loginCheck();
+  // 게시글상세 조회
+  const getPostDetail = () => {
     dispatch(__getPostDetail(params?.postId)).then((res) => {
       const { type, payload } = res;
 
@@ -57,6 +55,12 @@ function DetailPost() {
         navigate("/");
       }
     });
+  };
+
+  // 화면 로드 시 게시글상세 조회
+  useEffect(() => {
+    loginCheck();
+    getPostDetail();
   }, []);
 
   //게시글 삭제
@@ -82,7 +86,7 @@ function DetailPost() {
       if (type === "addComment/fulfilled") {
         alert("댓글이 정상적으로 등록되었습니다.");
         setComment("");
-        window.location.href = `/posts/${params?.postId}`;
+        getPostDetail();
       }
     });
   };
@@ -93,7 +97,7 @@ function DetailPost() {
       const { payload, type } = res;
       if (type === "togglePostLikes/fulfilled") {
         alert(`${payload.message}`);
-        window.location.href = `/posts/${params?.postId}`;
+        getPostDetail();
       }
     });
   };
