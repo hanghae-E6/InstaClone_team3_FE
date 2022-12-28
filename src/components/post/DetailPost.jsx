@@ -62,7 +62,7 @@ function DetailPost() {
         className="close"
         size={25}
         onClick={() => {
-          navigate("/");
+          navigate(-1);
         }}
         style={{
           color: "white",
