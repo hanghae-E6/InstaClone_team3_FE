@@ -6,19 +6,19 @@ import CountLike from "../postElements/CountLike";
 import Content from "../postElements/Content";
 import { CgClose } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import CommentList from "../comment/CommentList";
 import { useDispatch } from "react-redux";
 import { __getPostDetail, __togglePostLikes } from "../../apis/postApi";
 import useInputs from "../../hooks/useInputs";
 import { __addComment } from "../../apis/commentApi";
 import { loginCheck } from "../../apis/api";
-// import IconBox from "../postElements/IconBox";
 import { MdMoreHoriz } from "react-icons/md";
 import ButtonsModal from "../common/ButtonsModal";
 import api from "../../apis/api";
 
 function DetailPost() {
+  const { state } = useLocation();
   const loggedinUserId = localStorage.getItem("userId");
   const params = useParams();
   const dispatch = useDispatch();
@@ -113,7 +113,8 @@ function DetailPost() {
         className="close"
         size={25}
         onClick={() => {
-          navigate("/");
+          // 이전페이지가 마이페이지면 다시 마이페이지로 돌아가고 그게 아니면 메인으로 이동
+          state === "mypage" ? navigate(-1) : navigate("/");
         }}
         style={{
           color: "white",

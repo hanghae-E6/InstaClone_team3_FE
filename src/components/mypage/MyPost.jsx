@@ -23,7 +23,8 @@ const MyPost = ({ post }) => {
     <Post className="post" key={post.postId}>
       <HoverEffect
         className="hover-effect"
-        onClick={() => navigate(`/posts/${post.postId}`)}
+        // 마이페이지에서 게시글 조회 후 팝업 닫을 시 다시 마이페이지로 redirect시키기 위해 state전달
+        onClick={() => navigate(`/posts/${post.postId}`, { state: "mypage" })}
       ></HoverEffect>
       <HoverIcons className="hover-icons">
         <BsFillHeartFill size={20} style={{ marginRight: "7px" }} />
