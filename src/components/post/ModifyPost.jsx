@@ -11,10 +11,10 @@ function ModifyPost() {
   const userId = localStorage.getItem("userId"); // 로그인한 사용자의 userId
   const navigate = useNavigate();
   const { postId } = useParams();
-  const { newImg, setNewImg } = useState("");
-  const { newContent, setNewContent } = useState("");
-  const { currentImg, setCurrentImg } = useState("");
-  const { currentContent, setCurrentContent } = useState("");
+  const [currentImg, setCurrentImg] = useState("");
+  const [newImg, setNewImg] = useState("");
+  const [content, setContent] = useState("");
+  const [prevImg, setPrevImg] = useState("");
 
   useEffect(() => {
     const getCurrentPost = async () => {
@@ -22,40 +22,47 @@ function ModifyPost() {
       return data;
     };
     getCurrentPost().then((res) => {
-      console.log(res);
-      setCurrentImg(res.data.postImg);
-      setCurrentContent(res.data.content);
+      console.log("왁", res);
+      setCurrentImg(res.data.post.postImg);
+      setContent(res.data.post.content);
     });
   }, []);
 
   const albumBucketName = "imagebucketforcloneinsta";
   const handleFileModify = (e) => {
     const file = e.target.files[0];
-    setNewImg(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setPrevImg(reader.result);
+      };
+      setNewImg(file);
 
-    const upload = new AWS.S3.ManagedUpload({
-      params: {
-        Bucket: albumBucketName, // 업로드할 대상 버킷명
-        Body: file, // 업로드할 파일 객체
-        ContentType: file.type,
-        Key: file.name, // 업로드할 파일명 (* 확장자를 추가해야 합니다!)
-      },
-    });
+      const upload = new AWS.S3.ManagedUpload({
+        params: {
+          Bucket: albumBucketName, // 업로드할 대상 버킷명
+          Body: file, // 업로드할 파일 객체
+          ContentType: file.type,
+          Key: file.name, // 업로드할 파일명 (* 확장자를 추가해야 합니다!)
+        },
+      });
 
-    const promise = upload.promise();
+      const promise = upload.promise();
 
-    promise.then(
-      function () {
-        alert("이미지 업로드에 성공했습니다.");
-      },
-      function (err) {
-        return alert("오류가 발생했습니다: ", err.message);
-      }
-    );
+      promise.then(
+        function () {
+          alert("이미지 업로드에 성공했습니다.");
+        },
+        function (err) {
+          return alert("오류가 발생했습니다: ", err.message);
+        }
+      );
+    }
   };
 
   const HandleTextModify = (e) => {
-    setNewContent(e.target.value);
+    setContent(e.target.value);
   };
 
   const HandleModifyPost = async (e) => {
@@ -63,7 +70,7 @@ function ModifyPost() {
 
     const formData = new FormData();
     formData.append("postImg", newImg);
-    formData.append("content", newContent);
+    formData.append("content", content);
 
     try {
       const res = await imageApi.put(`api/posts/${postId}`, formData);
@@ -99,14 +106,14 @@ function ModifyPost() {
         <ContentsWrapper>
           <ImageUpload>
             <ImagePreviewBox>
-              {!newImg ? (
+              {!prevImg ? (
                 <img alt="기존이미지" src={currentImg} width="100px" />
               ) : (
-                <img alt="수정이미지" src={newImg} />
+                <img alt="수정이미지" src={prevImg} width="100px" />
               )}
             </ImagePreviewBox>
             <div>
-              <Img src={newImg} alt="" style={{ marginBottom: "10px" }} />
+              {/* <Img src={newImg} alt="" style={{ marginBottom: "10px" }} /> */}
               <div size="20px">사진과 동영상을 여기에 끌어다 놓으세요</div>
               <input type="file" onChange={handleFileModify}></input>
             </div>
@@ -115,7 +122,7 @@ function ModifyPost() {
             <UserBox userInfo={{ userId }} />
             <TextArea
               placeholder="문구 입력..."
-              value={newContent}
+              value={content}
               onChange={HandleTextModify}
             />
           </ContentUpload>

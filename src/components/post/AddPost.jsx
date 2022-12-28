@@ -5,6 +5,7 @@ import { CgClose } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 import AWS from "aws-sdk";
 import { imageApi, loginCheck } from "../../apis/api";
+import uploadImg from "../../assets/imgupload.png";
 
 function AddPost() {
   useLayoutEffect(() => {
@@ -108,14 +109,14 @@ function AddPost() {
           <ImageUpload>
             <ImagePreviewBox>
               {prevImg ? (
+                <img id="preview" alt="미리보기" src={prevImg} width="100px" />
+              ) : (
                 <img
                   id="preview"
                   alt="미리보기"
-                  src={prevImg || ""}
+                  src={uploadImg}
                   width="100px"
                 />
-              ) : (
-                ""
               )}
             </ImagePreviewBox>
             <div>
