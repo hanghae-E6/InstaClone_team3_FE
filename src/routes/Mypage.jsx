@@ -68,14 +68,20 @@ const Mypage = () => {
           >
             <Profile>
               <UserName>{user.nickname}</UserName>
-              <Button
-                btnTheme="secondary"
-                width="105px"
-                height="32px"
-                onClick={goToMypageEdit}
-              >
-                프로필 편집
-              </Button>
+              {localStorage.getItem("userId") === userId ? (
+                <Button
+                  btnTheme="secondary"
+                  width="105px"
+                  height="32px"
+                  onClick={goToMypageEdit}
+                >
+                  프로필 편집
+                </Button>
+              ) : (
+                <Button btnTheme="secondary" width="105px" height="32px">
+                  팔로우
+                </Button>
+              )}
             </Profile>
 
             <PostsCounter>
