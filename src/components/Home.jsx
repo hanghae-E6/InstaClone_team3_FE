@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import Template from "../components/layout/Template";
-import PostCard from "../components/post/PostCard";
+import Template from "./layout/Template";
+import PostCard from "./post/PostCard";
 import { __getPostsByPageno } from "../apis/postApi";
-import Loader from "../components/common/Loader";
+import Loader from "./common/Loader";
 
 let pageno = 1;
 const Home = () => {
@@ -75,7 +75,7 @@ const Home = () => {
   return posts ? (
     <Template>
       {posts.map((post) => (
-        <PostCard key={post.postId} post={post} />
+        <PostCard key={`${post.postId}${post.createdAt}`} post={post} />
       ))}
       {posts.length !== 0 ? (
         <div ref={setTarget} className="Target-Element">

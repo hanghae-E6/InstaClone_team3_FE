@@ -1,24 +1,26 @@
-import React from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import useSetUser from "../../hooks/useSetUser";
 import CommentOptions from "./CommentOptions";
 
-const CommentItem = ({ commentInfo, postId }) => {
+const CommentItem = ({ commentInfo, postId, userId }) => {
   const { nickname, comment } = commentInfo;
+  const user = useSetUser(userId); // 사용자 정보 조회
 
   return (
     <>
       <CommentWrapper>
         <Profile>
-          <Link>
-            <img src="https://i.ibb.co/8ryJ7Lf/image.jpg" alt="프로필" />
+          <Link to={`/mypage/${user?.userId}`}>
+            {user ? <img src={`${user.profileImg}`} alt="프로필" /> : ""}
           </Link>
         </Profile>
 
         <CommentBox>
           <Comment>
             <Nickname>
-              <Link>{nickname}</Link>
+              <Link to={`/mypage/${user?.userId}`}>{nickname}</Link>
             </Nickname>
             {comment}
           </Comment>
@@ -72,9 +74,4 @@ const Comment = styled.span`
   color: rgb(38, 38, 38);
 `;
 
-const LikeButton = styled.span`
-  cursor: pointer;
-  margin-left: 20px;
-`;
-
-export default CommentItem;
+export default memo(CommentItem);

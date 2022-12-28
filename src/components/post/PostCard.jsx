@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
 import UserBox from "../postElements/UserBox";
 import Image from "../postElements/Image";
@@ -20,6 +20,10 @@ function PostCard({ post }) {
 
   // 댓글 등록
   const onAddComment = () => {
+    if (comment === "") {
+      alert("댓글을 입력해주세요.");
+      return;
+    }
     dispatch(__addComment({ postId, comment })).then((res) => {
       const { type } = res;
 
@@ -52,12 +56,6 @@ function PostCard({ post }) {
               alt=""
               onClick={onDetailPage}
             />
-            {/* <img
-              src={DmLogo}
-              style={{ width: "22px", marginLeft: "10px" }}
-              className="icon"
-              alt=""
-            /> */}
             <img src="img/save.PNG" className="save icon" alt="" />
           </ReactionWrapper>
           {/* <Likes>좋아요 1만개</Likes> */}
@@ -235,6 +233,10 @@ const ReactionWrapper = styled.div`
   height: 50px;
   display: flex;
   align-items: center;
+  img,
+  svg {
+    cursor: pointer;
+  }
 `;
 
 //   .reaction-wrapper .icon {
@@ -255,4 +257,4 @@ const ReactionWrapper = styled.div`
 //   height: 700px;
 //   border-radius: 10px;
 // `;
-export default PostCard;
+export default memo(PostCard);

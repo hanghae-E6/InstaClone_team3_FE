@@ -53,3 +53,19 @@ export const __getPostDetail = createAsyncThunk(
     }
   }
 );
+
+// export const __addPosts = createAsyncThunk(
+//   "addPosts",
+//   async (payload, thunkAPI) => {
+//     try {
+//       const response = await api.get(`/api/posts`);
+//       return thunkAPI.fulfillWithValue(response.data);
+//     } catch (error) {
+//       const { status, data } = error.response;
+//       if (status === 404) {
+//         alert(data.errorMessage);
+//       }
+//       return thunkAPI.rejectWithValue(error);
+//     }
+//   }
+// );
