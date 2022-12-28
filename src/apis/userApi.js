@@ -14,3 +14,17 @@ export const __getUserInfo = createAsyncThunk(
     }
   }
 );
+
+// 팔로잉/팔로워 목록 조회
+export const __getFollowList = createAsyncThunk(
+  "getFollowList",
+  async (payload, thunkAPI) => {
+    const userId = payload;
+    try {
+      const response = await api.get(`/api/follow/${userId}`);
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
