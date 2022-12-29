@@ -44,6 +44,7 @@ const ProfilePic = styled.div`
   padding: 0;
   background: none;
   img {
+    height: 40px;
     border-radius: 50px;
   }
 `;
