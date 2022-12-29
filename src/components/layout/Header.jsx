@@ -8,6 +8,7 @@ import {
 } from "react-icons/md";
 import { Link } from "react-router-dom";
 import useSetUser from "../../hooks/useSetUser";
+import Logo from "../../images/Instar⭐gram_logo.jpg";
 
 const Header = () => {
   const user = useSetUser(); // 사용자 정보 조회
@@ -23,7 +24,7 @@ const Header = () => {
 
   return (
     <HeaderWrapper>
-      <img alt="logo" src="Instar⭐gram_logo.jpg" />
+      <img alt="logo" src={Logo} />
       <MenuList>
         <li>
           <Link to="/">
