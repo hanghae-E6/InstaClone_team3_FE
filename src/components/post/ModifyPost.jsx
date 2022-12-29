@@ -6,15 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { loginCheck } from "../../apis/api";
 import { useDispatch } from "react-redux";
 import api from "../../apis/api";
-import AWS from "aws-sdk";
 import { __modifyPost } from "../../apis/postApi";
-
-AWS.config.update({
-  region: "ap-northeast-2", // 버킷이 존재하는 리전을 문자열로 입력합니다. (Ex. "ap-northeast-2")
-  credentials: new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: process.env.REACT_APP_AWS_KEY, // cognito 인증 풀에서 받아온 키를 문자열로 입력합니다. (Ex. "ap-northeast-2...")
-  }),
-});
 
 function ModifyPost() {
   const userId = localStorage.getItem("userId"); // 로그인한 사용자의 userId
