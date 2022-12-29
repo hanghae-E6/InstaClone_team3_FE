@@ -41,7 +41,6 @@ function ModifyPost() {
     });
   }, []);
 
-  const albumBucketName = "imagebucketforcloneinsta";
   const handleFileModify = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -51,26 +50,6 @@ function ModifyPost() {
         setPrevImg(reader.result);
       };
       setNewImg(file);
-
-      const upload = new AWS.S3.ManagedUpload({
-        params: {
-          Bucket: albumBucketName, // 업로드할 대상 버킷명
-          Body: file, // 업로드할 파일 객체
-          ContentType: file.type,
-          Key: file.name, // 업로드할 파일명 (* 확장자를 추가해야 합니다!)
-        },
-      });
-
-      const promise = upload.promise();
-
-      promise.then(
-        function () {
-          alert("이미지 업로드에 성공했습니다.");
-        },
-        function (err) {
-          return alert("오류가 발생했습니다: ", err.message);
-        }
-      );
     }
   };
 
