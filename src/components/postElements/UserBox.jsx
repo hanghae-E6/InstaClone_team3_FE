@@ -41,8 +41,6 @@ const User = styled.div`
 `;
 
 const ProfilePic = styled.div`
-  width: 40px;
-  height: 40px;
   padding: 0;
   background: none;
   img {
