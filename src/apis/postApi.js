@@ -133,8 +133,10 @@ export const __deletePost = createAsyncThunk(
       const res = await api.delete(`api/posts/${postId}`, postId);
       alert(res.data.message);
       payload.navigate(-1);
+      return thunkAPI.fulfillWithValue(res.data);
     } catch (e) {
       alert(e.response.data.errorMessage);
+      return thunkAPI.rejectWithValue(e);
     }
   }
 );
