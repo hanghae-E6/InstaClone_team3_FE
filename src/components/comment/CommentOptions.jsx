@@ -36,14 +36,15 @@ const CommentOptions = ({ userId, commentId, postId }) => {
   };
 
   // 댓글 번역하기
-  const getTranslatedText = async () => {
-    // dispatch(__getTranslatedText());
-  };
+  // const getTranslatedText = async () => {
+  //   // dispatch(__getTranslatedText());
+  // };
 
   return (
     <>
       <CommentDetailWrapper>
-        <li onClick={getTranslatedText}>번역보기</li>
+        {/* 시간 지연으로 번역보기 기믕 개발은 못함 */}
+        {/* <li onClick={getTranslatedText}>번역보기</li> */}
         {/* 로그인한 사용자 아이디와 댓글을 쓴 사용자의 아이디가 같을때만 삭제할 수 있도록 한다. */}
         {loggedinUserId === String(userId) ? (
           <li>

@@ -30,7 +30,6 @@ function UserBox({ userInfo }) {
 const Info = styled.div`
   height: 50px;
   /* padding-left: 6px; */
-  margin-left: -8px;
   display: flex;
   align-items: center;
 `;
@@ -41,8 +40,6 @@ const User = styled.div`
 `;
 
 const ProfilePic = styled.div`
-  width: 40px;
-  height: 40px;
   padding: 0;
   background: none;
   img {
