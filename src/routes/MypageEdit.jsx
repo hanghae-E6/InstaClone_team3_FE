@@ -10,12 +10,13 @@ import ProfileTemplate from "../components/layout/ProfileTemplate";
 import Input from "../components/common/Input";
 import { Colors } from "../styles/colors";
 import "../components/mypage_edit/style/mypage_edit.css";
+import { useNavigate } from "react-router-dom";
 
 const MypageEdit = () => {
   useLayoutEffect(() => {
     loginCheck();
   }, []);
-
+  const navigate = useNavigate();
   const user = useSetUser();
   const [newImage, setNewImage] = useState(null);
   const [fileForNickname, setFileForNickname] = useState(null);
@@ -66,14 +67,24 @@ const MypageEdit = () => {
                   nickname,
                   profileImg: user.profileImg,
                 })
-                .then(window.location.assign(`/mypage/${user.userId}`))
+                .then((res) => {
+                  const { data, status } = res;
+                  if (status === 201) {
+                    alert(`${data.message}`);
+                  }
+                })
                 .catch((e) => alert(e));
+              navigate(`/mypage/${user.userId}`);
             }
           }
         })
         .catch((e) => {
           alert(e);
         });
+    } else if (nickname === user.nickname) {
+      alert("닉네임이 이전과 동일합니다.");
+    } else {
+      alert("닉네임은 4~16자의 영문 소문자, 숫자와 특수기호(-)만 가능합니다");
     }
   };
 
