@@ -223,7 +223,7 @@ const StDetail = styled.div`
 
 const StProfile = styled.div`
   width: 100%;
-  height: 7%;
+  height: 8%;
   justify-content: space-between;
   display: flex;
   position: relative;
@@ -252,7 +252,7 @@ const StLikes = styled.div`
 const PostTime = styled.p`
   color: rgba(0, 0, 0, 0.5);
   font-size: 12px;
-  margin-top: 5px;
+  margin-top: 7px;
 `;
 
 const ReactionWrapper = styled.div`
@@ -268,7 +268,7 @@ const ReactionWrapper = styled.div`
 
 const CommentWrapper = styled.div`
   width: 100%;
-  height: 50px;
+  height: 43px;
   border-radius: 1px solid #dfdfdf;
   display: flex;
   justify-content: space-between;
