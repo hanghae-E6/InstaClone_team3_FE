@@ -29,7 +29,8 @@ function UserBox({ userInfo }) {
 
 const Info = styled.div`
   height: 50px;
-  padding-left: 6px;
+  /* padding-left: 6px; */
+  margin-left: -8px;
   display: flex;
   align-items: center;
 `;
