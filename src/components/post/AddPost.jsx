@@ -4,7 +4,6 @@ import UserBox from "../postElements/UserBox";
 import { CgClose } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import AWS from "aws-sdk";
 import { loginCheck } from "../../apis/api";
 import uploadImg from "../../assets/imgupload.png";
 import { __addPost } from "../../apis/postApi";
