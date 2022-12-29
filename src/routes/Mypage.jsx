@@ -89,7 +89,10 @@ const Mypage = () => {
     userPosts && (
       <ProfileTemplate>
         <UpperWrap>
-          <UserImage alt="userImg" src={user.profileImg} />
+          <div style={{ width: "170px", height: "170px" }}>
+            <UserImage alt="userImg" src={user.profileImg} />
+          </div>
+
           <UserInfo>
             <Profile>
               <UserName>{user.nickname}</UserName>
