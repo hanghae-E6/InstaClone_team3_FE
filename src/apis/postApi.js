@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "./api";
+import { imageApi } from "./api";
 
 // 게시글 전체조회
 export const __getPosts = createAsyncThunk(
@@ -86,6 +87,54 @@ export const __togglePostLikes = createAsyncThunk(
         console.log(data.errorMessage);
       }
       return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+//게시글 등록
+export const __addPost = createAsyncThunk(
+  "addPost",
+  async (payload, thunkAPI) => {
+    try {
+      const res = await imageApi.post("/api/posts", payload.formData);
+      alert(res.data.message);
+      payload.navigate(-1);
+      return thunkAPI.fulfillWithValue(res.data);
+    } catch (e) {
+      alert(e.response.data.errorMessage);
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);
+
+//게시글 수정
+export const __modifyPost = createAsyncThunk(
+  "modifiyPost",
+  async (payload, thunkAPI) => {
+    const postId = payload.postId;
+    try {
+      const res = await imageApi.put(`api/posts/${postId}`, payload.formData);
+      alert(res.data.message);
+      payload.navigate(`/posts/${postId}`);
+      return thunkAPI.fulfillWithValue(res.data);
+    } catch (e) {
+      alert(e.response.data.errorMessage);
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);
+
+//게시글 삭제
+export const __deletePost = createAsyncThunk(
+  "deletePost",
+  async (payload, thunkAPI) => {
+    const postId = payload.postId;
+    try {
+      const res = await api.delete(`api/posts/${postId}`, postId);
+      alert(res.data.message);
+      payload.navigate(-1);
+    } catch (e) {
+      alert(e.response.data.errorMessage);
     }
   }
 );

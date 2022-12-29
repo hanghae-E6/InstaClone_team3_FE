@@ -3,9 +3,11 @@ import styled from "styled-components";
 import UserBox from "../postElements/UserBox";
 import { CgClose } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import AWS from "aws-sdk";
-import { imageApi, loginCheck } from "../../apis/api";
+import { loginCheck } from "../../apis/api";
 import uploadImg from "../../assets/imgupload.png";
+import { __addPost } from "../../apis/postApi";
 
 function AddPost() {
   useLayoutEffect(() => {
@@ -14,6 +16,7 @@ function AddPost() {
 
   const userId = localStorage.getItem("userId"); // 로그인한 사용자의 userId
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const albumBucketName = "imagebucketforcloneinsta";
   const [content, setContent] = useState("");
@@ -64,24 +67,14 @@ function AddPost() {
     setContent(e.target.value);
   };
 
-  const HandleSubmitPost = async (e) => {
+  const HandleSubmitPost = (e) => {
     e.preventDefault();
 
     const formData = new FormData();
     formData.append("postImg", postImg);
     formData.append("content", content);
 
-    try {
-      await imageApi.post("/api/posts", formData).then((res) => {
-        const { status, data } = res;
-        if (status === 201) {
-          alert(`${data.message}`);
-          navigate(-1);
-        }
-      });
-    } catch (e) {
-      alert(e.response.data.errorMessage);
-    }
+    dispatch(__addPost({ formData, navigate }));
   };
 
   return (
