@@ -19,7 +19,7 @@
   color: transparent;
 }
 
-.signup-input:placeholder-shown + label {
+.signup-input:placeholder-shown + .signup-label {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
   color: rgb(142, 142, 142);
@@ -28,8 +28,8 @@
   margin-top: 12px;
 }
 
-.signup-input:not(:placeholder-shown) + label,
-label {
+.signup-input:not(:placeholder-shown) + .signup-label,
+.signup-label {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
   color: rgb(142, 142, 142);

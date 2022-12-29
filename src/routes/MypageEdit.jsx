@@ -159,23 +159,23 @@ const UserName = styled.h2`
   font-size: 25px;
   font-weight: 400;
   color: rgb(38, 38, 38);
-  margin-bottom: 25px;
+  margin-bottom: 5px;
 `;
 
 const ImgInputLabel = styled.label`
   font-size: 14px;
   font-weight: 600;
   color: rgb(0, 149, 246);
-  margin-left: 790px;
-  margin-top: -20px;
+  /* margin-left: px; */
+  /* margin-top: -20px; */
 `;
 
 const ImgInput = styled.input`
   cursor: pointer;
   position: absolute;
   opacity: 0;
-  margin-left: -5px;
-  margin-top: -20px;
+  margin-left: -120px;
+  margin-top: 0px;
   width: 120px;
   height: 15px;
 `;
