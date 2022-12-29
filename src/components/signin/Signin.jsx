@@ -100,7 +100,7 @@ const Signin = () => {
                   style={{ margin: "0 40px 10px" }}
                   placeholder="이메일"
                 />
-                <label>이메일</label>
+                <label className="signin-label">이메일</label>
               </div>
               <div className="signin-input-box">
                 <Input
@@ -112,7 +112,7 @@ const Signin = () => {
                   style={{ margin: "0 40px 10px" }}
                   placeholder="비밀번호"
                 />
-                <label>비밀번호</label>
+                <label className="signin-label">비밀번호</label>
                 {password && (
                   <PasswordShowStatus
                     onClick={togglePW}

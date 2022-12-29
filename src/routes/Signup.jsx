@@ -170,7 +170,7 @@ const Signup = () => {
                       margin: "0 40px 10px",
                     }}
                   />
-                  <label>이메일 주소</label>
+                  <label className="signup-label">이메일 주소</label>
                   <span className="message">{emailMessage}</span>
                 </div>
                 <div className="signup-input-box">
@@ -182,7 +182,7 @@ const Signup = () => {
                     onBlur={onBlurNickname}
                     style={{ margin: "0 40px 10px" }}
                   />
-                  <label>사용자 이름</label>
+                  <label className="signup-label">사용자 이름</label>
                   {email && !nicknameMessage ? (
                     <RandomNickname onClick={onClickRandomString}>
                       {SIGNUP_VALIDATION.MESSAGE.DEFAULT}
@@ -215,7 +215,7 @@ const Signup = () => {
                     onBlur={onBlurPassword}
                     style={{ margin: "0 40px 10px" }}
                   />
-                  <label>비밀번호</label>
+                  <label className="signup-label">비밀번호</label>
                   <span
                     className="message"
                     style={{
