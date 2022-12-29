@@ -26,7 +26,7 @@
 
 
 ## 시연 영상 URL
-<>
+<https://www.youtube.com/watch?v=QtjAXCH5Enk>
 
 ## 대시보드
 <https://docs.google.com/spreadsheets/d/1iozGtV54Blye9ajb7srXCIkLjQ36PWqsrhn9CQ3z3aE/edit#gid=752718221>
