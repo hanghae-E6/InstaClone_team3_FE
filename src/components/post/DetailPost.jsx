@@ -9,7 +9,11 @@ import { useNavigate } from "react-router-dom";
 import { useLocation, useParams } from "react-router";
 import CommentList from "../comment/CommentList";
 import { useDispatch } from "react-redux";
-import { __getPostDetail, __togglePostLikes } from "../../apis/postApi";
+import {
+  __deletePost,
+  __getPostDetail,
+  __togglePostLikes,
+} from "../../apis/postApi";
 import useInputs from "../../hooks/useInputs";
 import { __addComment } from "../../apis/commentApi";
 import { loginCheck } from "../../apis/api";
@@ -64,17 +68,11 @@ function DetailPost() {
   }, []);
 
   //게시글 삭제
-  const HandleDeletePost = async () => {
-    try {
-      await api.delete(`api/posts/${postId}`, { postId: postId });
-      alert("삭제되었습니다");
-      navigate("/");
-    } catch (e) {
-      alert(e);
-    }
+  const HandleDeletePost = () => {
+    dispatch(__deletePost({ postId, navigate }));
   };
 
-  //게시글 수정
+  //게시글 수정페이지로 이동
   const HandleModifyPost = () => {
     navigate(`/write/${postId}`);
   };
