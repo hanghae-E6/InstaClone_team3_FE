@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import useSetUser from "../hooks/useSetUser";
 import useInput from "../hooks/useInput";
-import styled from "styled-components";
-import ProfileTemplate from "../components/layout/ProfileTemplate";
-import Modal from "../components/common/Modal";
-import { Colors } from "../styles/colors";
 import axios from "../../node_modules/axios/index";
 import api, { imageApi } from "../apis/api";
 import { SIGNUP_VALIDATION } from "../constants/validation";
+import styled from "styled-components";
+import ProfileTemplate from "../components/layout/ProfileTemplate";
+import Modal from "../components/common/Modal";
+import Input from "../components/common/Input";
+import { Colors } from "../styles/colors";
+import "../components/mypage_edit/style/mypage_edit.css";
 
 const MypageEdit = () => {
   const user = useSetUser();
@@ -16,7 +18,7 @@ const MypageEdit = () => {
   const [fileForNickname, setFileForNickname] = useState(null);
 
   const [nickname, isNicknameValid, inputNickname] = useInput(
-    user?.nickname,
+    "",
     SIGNUP_VALIDATION.NICKNAME
   );
 
@@ -76,52 +78,78 @@ const MypageEdit = () => {
     user && (
       <ProfileTemplate>
         <Wrap>
-          <div
-            style={{
-              display: "flex",
-            }}
-          >
+          <UserWrap>
             <ProfileImg
               alt="profileImg"
               src={newImage ? newImage : user.profileImg}
             />
-            <div
+            <UserRightWrap>
+              <UserName>{user.nickname}</UserName>
+              {!modalToggle ? (
+                <div>
+                  <ImgInputLabel>프로필 사진 바꾸기</ImgInputLabel>
+                  <ImgInput
+                    type="file"
+                    accept="image/png, image/jpg"
+                    onChange={fileInput}
+                  />
+                </div>
+              ) : (
+                <div>
+                  <ImgInputLabel>프로필 사진 바꾸기</ImgInputLabel>
+                </div>
+              )}
+            </UserRightWrap>
+          </UserWrap>
+          <NicknameInputWrap>
+            <NicknameInputLabel>사용자 이름</NicknameInputLabel>
+            <Input
+              className="nickname-edit-input"
+              value={nickname}
+              onChange={inputNickname}
               style={{
-                display: "flex",
-                flexDirection: "column",
+                fontSize: "18px",
+                height: "28px",
+                width: "200px",
+                backgroundColor: "rgb(255, 255, 255)",
+                borderRadius: "3px",
+                padding: "0px 8px",
               }}
-            >
-              <span>{user.nickname}</span>
-              <input
-                type="file"
-                accept="image/png, image/jpg"
-                onChange={fileInput}
-              />
-              <span onClick={() => setModalToggle((prev) => !prev)}>
-                프로필 사진 바꾸기
-              </span>
-            </div>
-            {modalToggle && <Modal visible />}
-          </div>
+            ></Input>
+          </NicknameInputWrap>
+          <Button onClick={editNickname}>제출</Button>
+        </Wrap>
+        <Modal
+          visible={modalToggle}
+          onClose={() => setModalToggle(false)}
+          width="400px"
+        >
           <div
             style={{
               display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <span>사용자 이름</span>
-            <input value={nickname} onChange={inputNickname}></input>
+            <span>프로필 사진 바꾸기</span>
+            <DivideLine />
+            <span>사진 업로드</span>
+            <DivideLine />
+            <span>현재 사진 삭제</span>
+            <DivideLine />
+            <span>취소</span>
           </div>
-          <button onClick={editNickname}>제출</button>
-        </Wrap>
+        </Modal>
       </ProfileTemplate>
     )
   );
 };
 
 const Wrap = styled.div`
-  height: 600px;
-  border: 1px solid ${Colors.grey};
   background-color: white;
+  border: 1px solid ${Colors.grey};
+  height: 600px;
   margin-top: 25px;
   margin-left: 10px;
   display: flex;
@@ -130,9 +158,87 @@ const Wrap = styled.div`
   align-items: center;
 `;
 
-const ProfileImg = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+const UserWrap = styled.div`
+  width: 200px;
+  height: 50px;
+  margin-left: -210px;
+  gap: 28px;
+  display: flex;
+  align-items: center;
 `;
+
+const ProfileImg = styled.img`
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+`;
+
+const UserRightWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const UserName = styled.h2`
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  font-size: 25px;
+  font-weight: 400;
+  color: rgb(38, 38, 38);
+  margin-bottom: 25px;
+`;
+
+const ImgInputLabel = styled.label`
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(0, 149, 246);
+  margin-left: 790px;
+  margin-top: -20px;
+`;
+
+const ImgInput = styled.input`
+  cursor: pointer;
+  position: absolute;
+  opacity: 0;
+  margin-left: -5px;
+  margin-top: -20px;
+  width: 120px;
+  height: 15px;
+`;
+
+const NicknameInputWrap = styled.div`
+  margin-left: -160px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 30px;
+  gap: 30px;
+  display: flex;
+  align-items: center;
+`;
+
+const NicknameInputLabel = styled.span`
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+`;
+
+const Button = styled.button`
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(255, 255, 255);
+  background-color: rgb(0, 149, 246);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin-left: -215px;
+  padding: 5px 9px;
+`;
+
+const DivideLine = styled.div`
+  border: 1px solid ${Colors.grey};
+  background-color: ${Colors.grey};
+  width: 398px;
+  height: 0px;
+`;
+
 export default MypageEdit;
