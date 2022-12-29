@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useCallback, useLayoutEffect, useState } from "react";
 import { useNavigate } from "../../node_modules/react-router-dom/dist/index";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -37,7 +37,7 @@ const Mypage = () => {
   };
 
   // 팔로잉/팔로워 목록 조회
-  const getFollowList = () => {
+  const getFollowList = useCallback(() => {
     dispatch(__getFollowList(userId)).then((res) => {
       const { type, payload } = res;
       if (type === "getFollowList/fulfilled") {
@@ -45,7 +45,7 @@ const Mypage = () => {
         setFollowerList(payload.followList.follower);
       }
     });
-  };
+  }, [dispatch, userId]);
 
   useLayoutEffect(() => {
     loginCheck();
@@ -65,7 +65,7 @@ const Mypage = () => {
     });
     // 팔로잉/팔로워 목록 조회
     getFollowList();
-  }, []);
+  }, [dispatch, getFollowList, userId]);
 
   // 프로필편집페이지로 이동
   const goToMypageEdit = () => {
