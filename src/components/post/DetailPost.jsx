@@ -9,7 +9,11 @@ import { useNavigate } from "react-router-dom";
 import { useLocation, useParams } from "react-router";
 import CommentList from "../comment/CommentList";
 import { useDispatch } from "react-redux";
-import { __getPostDetail, __togglePostLikes } from "../../apis/postApi";
+import {
+  __deletePost,
+  __getPostDetail,
+  __togglePostLikes,
+} from "../../apis/postApi";
 import useInputs from "../../hooks/useInputs";
 import { __addComment } from "../../apis/commentApi";
 import { loginCheck } from "../../apis/api";
@@ -64,17 +68,11 @@ function DetailPost() {
   }, []);
 
   //게시글 삭제
-  const HandleDeletePost = async () => {
-    try {
-      await api.delete(`api/posts/${postId}`, { postId: postId });
-      alert("삭제되었습니다");
-      navigate("/");
-    } catch (e) {
-      alert(e);
-    }
+  const HandleDeletePost = () => {
+    dispatch(__deletePost({ postId, navigate }));
   };
 
-  //게시글 수정
+  //게시글 수정페이지로 이동
   const HandleModifyPost = () => {
     navigate(`/write/${postId}`);
   };
@@ -223,7 +221,7 @@ const StDetail = styled.div`
 
 const StProfile = styled.div`
   width: 100%;
-  height: 7%;
+  height: 8%;
   justify-content: space-between;
   display: flex;
   position: relative;
@@ -252,7 +250,7 @@ const StLikes = styled.div`
 const PostTime = styled.p`
   color: rgba(0, 0, 0, 0.5);
   font-size: 12px;
-  margin-top: 5px;
+  margin-top: 7px;
 `;
 
 const ReactionWrapper = styled.div`
@@ -268,7 +266,7 @@ const ReactionWrapper = styled.div`
 
 const CommentWrapper = styled.div`
   width: 100%;
-  height: 50px;
+  height: 43px;
   border-radius: 1px solid #dfdfdf;
   display: flex;
   justify-content: space-between;

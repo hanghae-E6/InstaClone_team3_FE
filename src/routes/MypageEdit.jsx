@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
+import { loginCheck } from "../apis/api";
 import useSetUser from "../hooks/useSetUser";
 import useInput from "../hooks/useInput";
 import axios from "../../node_modules/axios/index";
@@ -6,14 +7,16 @@ import api, { imageApi } from "../apis/api";
 import { SIGNUP_VALIDATION } from "../constants/validation";
 import styled from "styled-components";
 import ProfileTemplate from "../components/layout/ProfileTemplate";
-import Modal from "../components/common/Modal";
 import Input from "../components/common/Input";
 import { Colors } from "../styles/colors";
 import "../components/mypage_edit/style/mypage_edit.css";
 
 const MypageEdit = () => {
+  useLayoutEffect(() => {
+    loginCheck();
+  }, []);
+
   const user = useSetUser();
-  const [modalToggle, setModalToggle] = useState(false);
   const [newImage, setNewImage] = useState(null);
   const [fileForNickname, setFileForNickname] = useState(null);
 
@@ -85,20 +88,14 @@ const MypageEdit = () => {
             />
             <UserRightWrap>
               <UserName>{user.nickname}</UserName>
-              {!modalToggle ? (
-                <div>
-                  <ImgInputLabel>프로필 사진 바꾸기</ImgInputLabel>
-                  <ImgInput
-                    type="file"
-                    accept="image/png, image/jpg"
-                    onChange={fileInput}
-                  />
-                </div>
-              ) : (
-                <div>
-                  <ImgInputLabel>프로필 사진 바꾸기</ImgInputLabel>
-                </div>
-              )}
+              <div>
+                <ImgInputLabel>프로필 사진 바꾸기</ImgInputLabel>
+                <ImgInput
+                  type="file"
+                  accept="image/png, image/jpg"
+                  onChange={fileInput}
+                />
+              </div>
             </UserRightWrap>
           </UserWrap>
           <NicknameInputWrap>
@@ -119,28 +116,6 @@ const MypageEdit = () => {
           </NicknameInputWrap>
           <Button onClick={editNickname}>제출</Button>
         </Wrap>
-        <Modal
-          visible={modalToggle}
-          onClose={() => setModalToggle(false)}
-          width="400px"
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <span>프로필 사진 바꾸기</span>
-            <DivideLine />
-            <span>사진 업로드</span>
-            <DivideLine />
-            <span>현재 사진 삭제</span>
-            <DivideLine />
-            <span>취소</span>
-          </div>
-        </Modal>
       </ProfileTemplate>
     )
   );
@@ -232,13 +207,6 @@ const Button = styled.button`
   border-radius: 4px;
   margin-left: -215px;
   padding: 5px 9px;
-`;
-
-const DivideLine = styled.div`
-  border: 1px solid ${Colors.grey};
-  background-color: ${Colors.grey};
-  width: 398px;
-  height: 0px;
 `;
 
 export default MypageEdit;

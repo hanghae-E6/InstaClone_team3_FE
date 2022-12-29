@@ -3,9 +3,11 @@ import styled from "styled-components";
 import UserBox from "../postElements/UserBox";
 import { CgClose } from "react-icons/cg";
 import { useNavigate, useParams } from "react-router-dom";
-import { imageApi, loginCheck } from "../../apis/api";
+import { loginCheck } from "../../apis/api";
+import { useDispatch } from "react-redux";
 import api from "../../apis/api";
 import AWS from "aws-sdk";
+import { __modifyPost } from "../../apis/postApi";
 
 AWS.config.update({
   region: "ap-northeast-2", // 버킷이 존재하는 리전을 문자열로 입력합니다. (Ex. "ap-northeast-2")
@@ -17,6 +19,7 @@ AWS.config.update({
 function ModifyPost() {
   const userId = localStorage.getItem("userId"); // 로그인한 사용자의 userId
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { postId } = useParams();
   const [currentImg, setCurrentImg] = useState("");
   const [newImg, setNewImg] = useState("");
@@ -33,7 +36,6 @@ function ModifyPost() {
       return data;
     };
     getCurrentPost().then((res) => {
-      // console.log("왁", res);
       setCurrentImg(res.data.post.postImg);
       setContent(res.data.post.content);
     });
@@ -76,25 +78,14 @@ function ModifyPost() {
     setContent(e.target.value);
   };
 
-  const HandleModifyPost = async (e) => {
+  const HandleModifyPost = (e) => {
     e.preventDefault();
 
     const formData = new FormData();
     formData.append("postImg", newImg);
     formData.append("content", content);
 
-    try {
-      const res = await imageApi.put(`api/posts/${postId}`, formData);
-      // console.log("모야", formData);
-      // console.log("이거시", res);
-      const { status, data } = res;
-      if (status === 200) {
-        alert(`${data.message}`);
-        navigate(`/posts/${postId}`);
-      }
-    } catch (e) {
-      alert(e.response.data.errorMessage);
-    }
+    dispatch(__modifyPost({ formData, navigate, postId }));
   };
 
   return (
