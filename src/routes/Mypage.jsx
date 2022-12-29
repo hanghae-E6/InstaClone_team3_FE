@@ -202,8 +202,6 @@ const Counter = styled.div`
   color: rgb(38, 38, 38);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-    Arial, sans-serif;
   display: flex;
   flex-direction: row;
   div {

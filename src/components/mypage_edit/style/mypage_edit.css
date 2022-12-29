@@ -1,0 +1,3 @@
+.nickname-edit-input:focus {
+  border: 1px solid black;
+}
