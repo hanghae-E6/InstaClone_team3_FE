@@ -228,6 +228,7 @@ const DivideLine = styled.div`
 
 const PostsWrap = styled.div`
   margin-left: -41px;
+  margin-bottom: 32px;
   display: flex;
   flex-wrap: wrap;
   gap: 32px;

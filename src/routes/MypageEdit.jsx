@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
+import { loginCheck } from "../apis/api";
 import useSetUser from "../hooks/useSetUser";
 import useInput from "../hooks/useInput";
 import axios from "../../node_modules/axios/index";
@@ -11,6 +12,10 @@ import { Colors } from "../styles/colors";
 import "../components/mypage_edit/style/mypage_edit.css";
 
 const MypageEdit = () => {
+  useLayoutEffect(() => {
+    loginCheck();
+  }, []);
+
   const user = useSetUser();
   const [newImage, setNewImage] = useState(null);
   const [fileForNickname, setFileForNickname] = useState(null);
