@@ -23,7 +23,7 @@ const Header = () => {
 
   return (
     <HeaderWrapper>
-      <h1>Instar⭐gram</h1>
+      <img alt="logo" src="Instar⭐gram_logo.jpg" />
       <MenuList>
         <li>
           <Link to="/">
@@ -70,11 +70,9 @@ const HeaderWrapper = styled.div`
   padding: 45px 20px 12px 28px;
   color: rgb(38, 38, 38);
   z-index: 1;
-  h1 {
-    @import url("https://fonts.googleapis.com/css2?family=Oleo+Script&display=swap");
-    font-family: "Oleo Script", cursive;
-    font-size: 30px;
+  img {
     margin-bottom: 60px;
+    width: 200px;
   }
 
   li {
