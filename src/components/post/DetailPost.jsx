@@ -19,7 +19,6 @@ import { __addComment } from "../../apis/commentApi";
 import { loginCheck } from "../../apis/api";
 import { MdMoreHoriz } from "react-icons/md";
 import ButtonsModal from "../common/ButtonsModal";
-import api from "../../apis/api";
 
 function DetailPost() {
   const { state } = useLocation();
@@ -230,7 +229,7 @@ const StProfile = styled.div`
 
 const StContent = styled.div`
   width: 100%;
-  height: 72%;
+  height: 69%;
   border-bottom: 1px solid #bcbcbc;
   overflow: hidden;
   padding-bottom: 15px;
@@ -238,14 +237,9 @@ const StContent = styled.div`
 
 const StLikes = styled.div`
   width: 100%;
-  height: 12%;
+  height: 14%;
   border-bottom: 1px solid #bcbcbc;
 `;
-
-// const StcommentInput = styled.div`
-//   width: 100%;
-//   height: 6%;
-// `;
 
 const PostTime = styled.p`
   color: rgba(0, 0, 0, 0.5);
