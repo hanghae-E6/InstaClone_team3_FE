@@ -65,7 +65,7 @@ const CommentOptions = ({ userId, commentId, postId }) => {
 };
 
 const CommentDetailWrapper = styled.ul`
-  margin: 0 0 25px 55px;
+  margin-left: 10px;
   li {
     font-size: 14px;
     color: #8e8e8e;

@@ -25,12 +25,12 @@ const CommentItem = ({ commentInfo, postId, userId }) => {
             {comment}
           </Comment>
         </CommentBox>
+        <CommentOptions
+          userId={commentInfo.userId}
+          commentId={commentInfo.commentId}
+          postId={postId}
+        />
       </CommentWrapper>
-      <CommentOptions
-        userId={commentInfo.userId}
-        commentId={commentInfo.commentId}
-        postId={postId}
-      />
     </>
   );
 };
