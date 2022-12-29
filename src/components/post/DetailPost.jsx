@@ -122,6 +122,7 @@ function DetailPost() {
           right: "4rem",
           top: "3rem",
           cursor: "pointer",
+          marginTop: "-35px",
         }}
       />
       <Wrapper>
@@ -206,7 +207,7 @@ const Wrapper = styled.div`
   background-color: white;
   display: flex;
   width: 980px;
-  height: 850px;
+  height: 700px;
   border-radius: 10px;
 `;
 
@@ -251,7 +252,7 @@ const StLikes = styled.div`
 const PostTime = styled.p`
   color: rgba(0, 0, 0, 0.5);
   font-size: 12px;
-  margin-top: 10px;
+  margin-top: 5px;
 `;
 
 const ReactionWrapper = styled.div`
@@ -275,8 +276,8 @@ const CommentWrapper = styled.div`
 `;
 
 const CommentBox = styled.input`
-  width: 80%;
-  height: 80%;
+  width: 100%;
+  height: 75%;
   border: none;
   outline: none;
   font-size: 14px;
